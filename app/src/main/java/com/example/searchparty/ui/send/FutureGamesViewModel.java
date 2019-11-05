@@ -4,13 +4,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-public class SendViewModel extends ViewModel {
+public class FutureGamesViewModel extends ViewModel {
     
     private MutableLiveData<String> mText;
     
-    public SendViewModel() {
+    public FutureGamesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is send fragment");
+        mText.setValue("This is Future Games fragment");
     }
     
     public LiveData<String> getText() {

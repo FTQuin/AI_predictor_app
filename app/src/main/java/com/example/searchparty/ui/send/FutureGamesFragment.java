@@ -13,17 +13,17 @@ import android.arch.lifecycle.ViewModelProviders;
 
 import com.example.searchparty.R;
 
-public class SendFragment extends Fragment {
+public class FutureGamesFragment extends Fragment {
     
-    private SendViewModel sendViewModel;
+    private FutureGamesViewModel futureGamesViewModel;
     
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        sendViewModel =
-                ViewModelProviders.of(this).get(SendViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_send, container, false);
-        final TextView textView = root.findViewById(R.id.text_send);
-        sendViewModel.getText().observe(this, new Observer<String>() {
+        futureGamesViewModel =
+                ViewModelProviders.of(this).get(FutureGamesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_future_games, container, false);
+        final TextView textView = root.findViewById(R.id.text_future_games);
+        futureGamesViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
