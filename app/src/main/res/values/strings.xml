@@ -12,6 +12,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_future_games">Future Games</string>
     <string name="menu_outcome">Outcome</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_predict_game">Predict Game</string>
     <string name="menu_tools">Tools</string>
 </resources>

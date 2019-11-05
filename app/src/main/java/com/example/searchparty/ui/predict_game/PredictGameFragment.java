@@ -1,4 +1,4 @@
-package com.example.searchparty.ui.Outcome;
+package com.example.searchparty.ui.predict_game;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,17 +13,17 @@ import android.arch.lifecycle.ViewModelProviders;
 
 import com.example.searchparty.R;
 
-public class OutcomeFragment extends Fragment {
+public class PredictGameFragment extends Fragment {
     
-    private OutcomeViewModel outcomeViewModel;
+    private PredictGameViewModel predictGameViewModel;
     
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        outcomeViewModel =
-                ViewModelProviders.of(this).get(OutcomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_outcome, container, false);
-        final TextView textView = root.findViewById(R.id.text_outcome);
-        outcomeViewModel.getText().observe(this, new Observer<String>() {
+        predictGameViewModel =
+                ViewModelProviders.of(this).get(PredictGameViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_predict_game, container, false);
+        final TextView textView = root.findViewById(R.id.text_predict_game);
+        predictGameViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
