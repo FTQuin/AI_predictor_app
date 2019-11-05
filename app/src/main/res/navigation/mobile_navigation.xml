@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/nav_send"
-        android:name="com.example.searchparty.ui.send.FutureGamesFragment"
+        android:name="com.example.searchparty.ui.future_games.FutureGamesFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_future_games" />
 </navigation>

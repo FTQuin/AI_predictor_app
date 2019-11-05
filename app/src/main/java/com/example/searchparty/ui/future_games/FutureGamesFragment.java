@@ -1,4 +1,4 @@
-package com.example.searchparty.ui.send;
+package com.example.searchparty.ui.future_games;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
