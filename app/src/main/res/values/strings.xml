@@ -11,7 +11,7 @@
     <string name="menu_history">History</string>
     <string name="menu_home">Home</string>
     <string name="menu_future_games">Future Games</string>
-    <string name="menu_share">Share</string>
+    <string name="menu_outcome">Outcome</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
 </resources>
