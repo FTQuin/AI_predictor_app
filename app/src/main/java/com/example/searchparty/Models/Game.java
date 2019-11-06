@@ -67,14 +67,13 @@ public class Game {
     }
     
     //toString
-    
     @Override
     public String toString() {
-        return "Game{" +
-                "homeTeam=" + homeTeam +
-                ", awayTeam=" + awayTeam +
-                ", prediction=" + prediction +
-                ", startTime=" + startTime +
-                '}';
+        return "Game{" + "\n" +
+                "\thomeTeam=" + homeTeam + "\n" +
+                "\t, awayTeam=" + awayTeam + "\n" +
+                "\t, prediction=" + prediction + "\n" +
+                "\t, startTime=" + startTime + "\n" +
+                "\t}";
     }
 }

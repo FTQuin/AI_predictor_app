@@ -13,12 +13,11 @@ public class Prediction {
         this.currentGame = currentGame;
     }
     
-    //tostring
-    
+    //toString
     @Override
     public String toString() {
-        return "Prediction{" +
-                "predictedOutcome=" + predictedOutcome +
-                '}';
+        return "Prediction{" + "\n" +
+                "\tpredictedOutcome=" + predictedOutcome + "\n" +
+                "\t}";
     }
 }

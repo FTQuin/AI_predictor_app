@@ -45,21 +45,18 @@ public class Team {
     }
     
     //getters and setters
-    
     public List<Game> getPreviousGames() {
         return previousGames;
     }
-    
     public List<Game> getFutureGames() {
         return futureGames;
     }
     
-    //tostring
-    
+    //toString
     @Override
     public String toString() {
-        return "Team{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Team{" + "\n" +
+                "\tname='" + name + '\'' + "\n" +
+                "\t}";
     }
 }
