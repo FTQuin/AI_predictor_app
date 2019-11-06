@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 
+import com.example.searchparty.Models.Game;
+import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 
 public class PredictGameFragment extends Fragment {
@@ -29,6 +31,24 @@ public class PredictGameFragment extends Fragment {
                 textView.setText(s);
             }
         });
+    
+        Team ATeam = new Team("ATeam");
+        Team BTeam = new Team("BTeam");
+    
+        Game futureGame = new Game(ATeam, BTeam);
+        Game pastGame = new Game(BTeam, ATeam);
+        
+        pastGame.completeGame();
+        
+        TextView txtTest = root.findViewById(R.id.txt_predict_test);
+        
+        String outstr = "";
+    
+        outstr = ATeam.getFutureGames().get(0).toString();
+        outstr = outstr + "\n\n" + BTeam.getPreviousGames().get(0).toString();
+        
+        txtTest.setText(outstr);
+        
         return root;
     }
 }
