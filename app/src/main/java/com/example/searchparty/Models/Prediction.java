@@ -12,4 +12,13 @@ public class Prediction {
         this.predictedOutcome = 0;
         this.currentGame = currentGame;
     }
+    
+    //tostring
+    
+    @Override
+    public String toString() {
+        return "Prediction{" +
+                "predictedOutcome=" + predictedOutcome +
+                '}';
+    }
 }

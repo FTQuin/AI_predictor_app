@@ -22,9 +22,16 @@ public class Game {
     public Game(Team homeTeam, Team awayTeam){
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        
+        homeTeam.addFutureGame(this);
+        awayTeam.addFutureGame(this);
+        
         this.prediction = new Prediction(this);
     }
     
+    public boolean completeGame(){
+        return homeTeam.completeGame(this) && awayTeam.completeGame(this);
+    }
     
     //Getters and Setters
     public Team getHomeTeam() {
@@ -57,5 +64,17 @@ public class Game {
     
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+    
+    //toString
+    
+    @Override
+    public String toString() {
+        return "Game{" +
+                "homeTeam=" + homeTeam +
+                ", awayTeam=" + awayTeam +
+                ", prediction=" + prediction +
+                ", startTime=" + startTime +
+                '}';
     }
 }

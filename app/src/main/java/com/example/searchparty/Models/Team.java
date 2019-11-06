@@ -25,7 +25,7 @@ public class Team {
     }
     
     //called when a team has completed a game
-    public boolean completeGame(Game finishedGame){
+    protected boolean completeGame(Game finishedGame){
         if(futureGames.contains(finishedGame)){
             futureGames.remove(finishedGame);
             previousGames.add(finishedGame);
@@ -42,5 +42,24 @@ public class Team {
     }
     public void addFutureGame(Game futureGame){
         futureGames.add(futureGame);
+    }
+    
+    //getters and setters
+    
+    public List<Game> getPreviousGames() {
+        return previousGames;
+    }
+    
+    public List<Game> getFutureGames() {
+        return futureGames;
+    }
+    
+    //tostring
+    
+    @Override
+    public String toString() {
+        return "Team{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
