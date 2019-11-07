@@ -35,19 +35,17 @@ public class PredictGameFragment extends Fragment {
         Team ATeam = new Team("ATeam");
         Team BTeam = new Team("BTeam");
     
-        Game futureGame = new Game(ATeam, BTeam);
-        Game pastGame = new Game(BTeam, ATeam);
+        new Game(ATeam, BTeam);
+        new Game(BTeam, ATeam).completeGame();
         
-        pastGame.completeGame();
-        
-        TextView txtTest = root.findViewById(R.id.txt_predict_test);
+//        TextView txtTest = root.findViewById(R.id.txt_predict_test);
         
         String outstr = "";
     
         outstr = ATeam.getFutureGames().get(0).toString();
         outstr = outstr + "\n\n" + BTeam.getPreviousGames().get(0).toString();
         
-        txtTest.setText(outstr);
+//        txtTest.setText(outstr);
         
         return root;
     }
