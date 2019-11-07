@@ -14,6 +14,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 
 import com.example.searchparty.DatabaseInterfaces.DatabaseInterface;
+import com.example.searchparty.Models.Game;
+import com.example.searchparty.Models.Prediction;
+import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 
 public class HomeFragment extends Fragment {
@@ -48,6 +51,12 @@ public class HomeFragment extends Fragment {
         //test databaseInterface
         final DatabaseInterface dbi = new DatabaseInterface(this.getContext());
     
+        //test teams
+        final Team ATeam = new Team("ATeam");
+        final Team BTeam = new Team("BTeam");
+        final Game game = new Game(BTeam, ATeam);
+        final Prediction prediction = new Prediction(game);
+        
         testBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +66,9 @@ public class HomeFragment extends Fragment {
 //                progTxt.setText(newProg.toString()+"%");
             
                 // test database
-                dbi.addData("400%");
+                dbi.addGame(game);
+                dbi.addTeam(BTeam);
+                dbi.addPrediction(prediction);
                 
             }
         });
@@ -66,9 +77,9 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
             
                 // test database
-                Cursor data = dbi.getData();
-                data.moveToNext();
-                progTxt.setText(data.getString(1));
+//                Cursor data = dbi.getData();
+//                data.moveToNext();
+//                progTxt.setText(data.getString(1));
             }
         });
         
