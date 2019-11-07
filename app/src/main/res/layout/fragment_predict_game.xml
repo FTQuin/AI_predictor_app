@@ -35,7 +35,7 @@
 
     <SeekBar
         android:id="@+id/SB_Predict_Game_Shot"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -44,7 +44,7 @@
 
     <SeekBar
         android:id="@+id/SB_Predict_Game_3Point"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -53,7 +53,7 @@
 
     <SeekBar
         android:id="@+id/SB_Predict_Game_FoulsGame"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
