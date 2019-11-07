@@ -1,5 +1,8 @@
 package com.example.searchparty.Models;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +41,30 @@ public class Team {
         }
     }
     
+    //convert lists to byte arrays for storage
+    public byte[] previousGamesBytes(){
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(previousGames);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        
+        return bos.toByteArray();
+    }
+    public byte[] futureGamesBytes(){
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(futureGames);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        
+        return bos.toByteArray();
+    }
+    
     //add games to a team
     public void addPreviousGame(Game prevGame){
         previousGames.add(prevGame);
@@ -47,6 +74,9 @@ public class Team {
     }
     
     //getters and setters
+    public String getName() {
+        return name;
+    }
     public List<Game> getPreviousGames() {
         return previousGames;
     }

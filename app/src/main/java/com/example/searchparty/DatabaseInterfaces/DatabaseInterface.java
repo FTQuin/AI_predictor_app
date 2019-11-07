@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.searchparty.Models.Game;
+import com.example.searchparty.Models.Prediction;
+import com.example.searchparty.Models.Team;
 
 public class DatabaseInterface extends SQLiteOpenHelper {
     /*
@@ -137,9 +139,10 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         }
     }
     
-    // reference for inserting content values
-    // {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},{"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"},
-    // {"PREDICTION_ID", "INTEGER"}, {"START_TIME", "TEXT"}};
+    // reference for inserting content values for game class
+    // {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
+    // {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"},
+    // {"PREDICTION_ID", "INTEGER"}, {"START_TIME", "TEXT"}}
     public boolean addGame(Game game) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -160,6 +163,50 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         //if data is inserted incorrectly it will return -1
         return result == -1;
     }
+    
+    // reference for inserting content values for prediction class
+    // {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
+    // {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "INTEGER"}}
+    public boolean addPrediction(Prediction prediction) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        
+        //outcome
+        contentValues.put(PREDICTION_TABLE_COLS[1][0], prediction.getPredictedOutcome());
+        //game
+        contentValues.put(PREDICTION_TABLE_COLS[2][0], prediction.getGame().getID());
+        
+        Log.d(TAG, "addData: Adding items to " + PREDICTION_TABLE_NAME);
+        
+        long result = db.insert(PREDICTION_TABLE_NAME, null, contentValues);
+        
+        //if data is inserted incorrectly it will return -1
+        return result == -1;
+    }
+    
+    // reference for inserting content values for team class
+    // {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
+    // {"NAME", "TEXT"}, {"PREVIOUS_GAMES", "BLOB"}, {"FUTURE_GAMES", "BLOB"}}
+    public boolean addTeam(Team team) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+    
+        //outcome
+        contentValues.put(TEAM_TABLE_COLS[1][0], team.getName());
+        //previousGames
+        contentValues.put(TEAM_TABLE_COLS[2][0], team.previousGamesBytes());
+        //futureGames
+        contentValues.put(TEAM_TABLE_COLS[3][0], team.futureGamesBytes());
+        
+        Log.d(TAG, "addData: Adding items to " + TEAM_TABLE_NAME);
+        
+        long result = db.insert(TEAM_TABLE_NAME, null, contentValues);
+        
+        //if data is inserted incorrectly it will return -1
+        return result == -1;
+    }
+    
+    // for future reference
 //
 //    /**
 //     * Returns all the data from database

@@ -22,6 +22,9 @@ public class Prediction {
     public Game getGame() {
         return game;
     }
+    public double getPredictedOutcome() {
+        return predictedOutcome;
+    }
     
     //toString
     @Override

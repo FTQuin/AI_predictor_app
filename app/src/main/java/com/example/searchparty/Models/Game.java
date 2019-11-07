@@ -19,6 +19,7 @@ public class Game {
     private Team homeTeam, awayTeam;
     private Prediction prediction;
     Date startTime;
+    int ID;
     
     public Game(Team homeTeam, Team awayTeam){
         this.homeTeam = homeTeam;
@@ -31,6 +32,8 @@ public class Game {
         
         this.startTime = new Date();
         startTime.setTime(startTime.getTime());
+        
+        this.ID = 0;
     }
     
     public boolean completeGame(){
@@ -41,33 +44,17 @@ public class Game {
     public Team getHomeTeam() {
         return homeTeam;
     }
-    
-    public void setHomeTeam(Team homeTeam) {
-        this.homeTeam = homeTeam;
-    }
-    
     public Team getAwayTeam() {
         return awayTeam;
     }
-    
-    public void setAwayTeam(Team awayTeam) {
-        this.awayTeam = awayTeam;
-    }
-    
     public Prediction getPrediction() {
         return prediction;
     }
-    
-    public void setPrediction(Prediction prediction) {
-        this.prediction = prediction;
-    }
-    
     public Date getStartTime() {
         return startTime;
     }
-    
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public int getID() {
+        return ID;
     }
     
     //toString
