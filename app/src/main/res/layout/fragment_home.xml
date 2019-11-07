@@ -76,4 +76,5 @@
         app:layout_constraintEnd_toEndOf="@+id/homeTestProgBar"
         app:layout_constraintStart_toStartOf="@+id/homeTestProgBar"
         app:layout_constraintTop_toTopOf="@+id/homeTestProgBar" />
+
 </android.support.constraint.ConstraintLayout>
