@@ -1,5 +1,7 @@
 package com.example.searchparty.Models;
 
+import java.util.UUID;
+
 public class Prediction {
     /*
         Prediction:
@@ -7,16 +9,16 @@ public class Prediction {
             get/set SliderValues*/
     private double predictedOutcome;
     private Game game;
-    private int ID;
+    private String ID;
     
     public Prediction(Game currentGame){
         this.predictedOutcome = 0;
         this.game = currentGame;
-        this.ID = 0;
+        this.ID = UUID.randomUUID().toString();
     }
     
-    //getters and setters
-    public int getID() {
+    //getters
+    public String getID() {
         return ID;
     }
     public Game getGame() {
@@ -24,6 +26,17 @@ public class Prediction {
     }
     public double getPredictedOutcome() {
         return predictedOutcome;
+    }
+    
+    //setters
+    public void setPredictedOutcome(double predictedOutcome) {
+        this.predictedOutcome = predictedOutcome;
+    }
+    public void setGame(Game game) {
+        this.game = game;
+    }
+    public void setID(String ID) {
+        this.ID = ID;
     }
     
     //toString

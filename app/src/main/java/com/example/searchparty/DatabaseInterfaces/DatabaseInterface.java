@@ -11,6 +11,10 @@ import com.example.searchparty.Models.Game;
 import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.Models.Team;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class DatabaseInterface extends SQLiteOpenHelper {
     /*
     methods to add:
@@ -52,28 +56,35 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     
     
     private static final String TAG = "DatabaseInterface";
-    
     private static final String DATABASE_NAME = "win_march.db";
     
+    //lists of team, game, and prediction objects
+    Map<String, Game> gameMap;
+    Map<String, Prediction> predictionMap;
+    Map<String, Team> teamMap;
+    
     //strings for creating the databases
+    //team attributes
+    private static final String TEAM_TABLE_NAME = "TEAM_TABLE";
+    private static final String[][] TEAM_TABLE_COLS = {{"ID", "STRING"},
+            {"NAME", "TEXT"}};
+    
     //game attributes
     private static final String GAME_TABLE_NAME = "GAME_TABLE";
-    private static final String[][] GAME_TABLE_COLS = {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
-            {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"PREDICTION_ID", "INTEGER"},
-            {"START_TIME", "TEXT"}};
+    private static final String[][] GAME_TABLE_COLS = {{"ID", "STRING"},
+            {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"START_TIME", "LONG"}};
     
     //prediction attributes
     private static final String PREDICTION_TABLE_NAME = "PREDICTION_TABLE";
-    private static final String[][] PREDICTION_TABLE_COLS = {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
+    private static final String[][] PREDICTION_TABLE_COLS = {{"ID", "STRING"},
             {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "INTEGER"}};
-    
-    //team attributes
-    private static final String TEAM_TABLE_NAME = "TEAM_TABLE";
-    private static final String[][] TEAM_TABLE_COLS = {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
-            {"NAME", "TEXT"}, {"PREVIOUS_GAMES", "BLOB"}, {"FUTURE_GAMES", "BLOB"}};
     
     public DatabaseInterface(Context context){
         super(context, DATABASE_NAME, null, 1);
+    
+        gameMap = new HashMap<>();
+        predictionMap = new HashMap<>();
+        teamMap = new HashMap<>();
     }
     
     @Override
@@ -115,46 +126,47 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        System.out.println("test");
+        db.execSQL("DROP IF TABLE EXISTS " + TEAM_TABLE_NAME);
         db.execSQL("DROP IF TABLE EXISTS " + GAME_TABLE_NAME);
         db.execSQL("DROP IF TABLE EXISTS " + PREDICTION_TABLE_NAME);
-        db.execSQL("DROP IF TABLE EXISTS " + TEAM_TABLE_NAME);
         onCreate(db);
     }
     
-    public boolean addData(String item) {
+    // reference for inserting content values for team class
+    // {{"ID", "STRING"},
+    // {"NAME", "TEXT"}}
+    public boolean addTeam(Team team) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(TEAM_TABLE_COLS[1][0], item);
+        //ID
+        contentValues.put(TEAM_TABLE_COLS[0][0], team.getID());
+        //name
+        contentValues.put(TEAM_TABLE_COLS[1][0], team.getName());
         
-        Log.d(TAG, "addData: Adding " + item + " to " + TEAM_TABLE_NAME);
+        Log.d(TAG, "addData: Adding items to " + TEAM_TABLE_NAME);
         
         long result = db.insert(TEAM_TABLE_NAME, null, contentValues);
         
-        //if date as inserted incorrectly it will return -1
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        //if data is inserted incorrectly it will return -1
+        return result == -1;
     }
     
     // reference for inserting content values for game class
-    // {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
-    // {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"},
-    // {"PREDICTION_ID", "INTEGER"}, {"START_TIME", "TEXT"}}
+    // {{"ID", "STRING"},
+    // {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"START_TIME", "Long"}}
     public boolean addGame(Game game) {
+        //TODO: add update vs insert logic
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         
+        //id
+        contentValues.put(GAME_TABLE_COLS[0][0], game.getID());
         //home team
         contentValues.put(GAME_TABLE_COLS[1][0], game.getHomeTeam().getID());
         //away team
         contentValues.put(GAME_TABLE_COLS[2][0], game.getAwayTeam().getID());
-        //prediction
-        contentValues.put(GAME_TABLE_COLS[2][0], game.getPrediction().getID());
         //date
-        contentValues.put(GAME_TABLE_COLS[2][0], game.getStartTime().toString());
+        contentValues.put(GAME_TABLE_COLS[3][0], game.getStartTime().getTime());
         
         Log.d(TAG, "addData: Adding items to " + GAME_TABLE_NAME);
         
@@ -165,12 +177,14 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     }
     
     // reference for inserting content values for prediction class
-    // {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
+    // {{"ID", "STRING"},
     // {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "INTEGER"}}
     public boolean addPrediction(Prediction prediction) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         
+        //id
+        contentValues.put(PREDICTION_TABLE_COLS[0][0], prediction.getID());
         //outcome
         contentValues.put(PREDICTION_TABLE_COLS[1][0], prediction.getPredictedOutcome());
         //game
@@ -184,26 +198,66 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         return result == -1;
     }
     
-    // reference for inserting content values for team class
-    // {{"ID", "INTEGER PRIMARY KEY AUTOINCREMENT"},
-    // {"NAME", "TEXT"}, {"PREVIOUS_GAMES", "BLOB"}, {"FUTURE_GAMES", "BLOB"}}
-    public boolean addTeam(Team team) {
+    public boolean loadDataFromDB(){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
+        
+        //load teams first
+        // {{"ID", "STRING"},
+        // {"NAME", "TEXT"}}
+        String query = "SELECT * FROM " + TEAM_TABLE_NAME;
+        Cursor data = db.rawQuery(query, null);
     
-        //outcome
-        contentValues.put(TEAM_TABLE_COLS[1][0], team.getName());
-        //previousGames
-        contentValues.put(TEAM_TABLE_COLS[2][0], team.previousGamesBytes());
-        //futureGames
-        contentValues.put(TEAM_TABLE_COLS[3][0], team.futureGamesBytes());
+        while (data.moveToNext()){
+            Team tempTeam = new Team(data.getString(1));
+            tempTeam.setID(data.getString(0));
+            teamMap.put(tempTeam.getID(), tempTeam);
+        }
         
-        Log.d(TAG, "addData: Adding items to " + TEAM_TABLE_NAME);
+        //load games
+        // {{"ID", "STRING"},
+        // {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"START_TIME", "Long"}}
+        query = "SELECT * FROM " + GAME_TABLE_NAME;
+        data = db.rawQuery(query, null);
         
-        long result = db.insert(TEAM_TABLE_NAME, null, contentValues);
+        //TODO: add error checking if maps return null values
+        while (data.moveToNext()){
+            Game tempGame = new Game(teamMap.get(data.getString(1)),
+                    teamMap.get(data.getString(2)));
+            tempGame.setID(data.getString(0));
+            tempGame.setStartTime(data.getLong(3));
+            //add game to its teams
+            if(tempGame.getStartTime().getTime() > new Date().getTime()){
+                tempGame.getHomeTeam().addFutureGame(tempGame);
+                tempGame.getAwayTeam().addFutureGame(tempGame);
+            } else {
+                tempGame.getHomeTeam().addPreviousGame(tempGame);
+                tempGame.getAwayTeam().addPreviousGame(tempGame);
+            }
+        }
         
-        //if data is inserted incorrectly it will return -1
-        return result == -1;
+        //load predictions
+        // {{"ID", "STRING"},
+        // {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "INTEGER"}}
+        query = "SELECT * FROM " + PREDICTION_TABLE_NAME;
+        data = db.rawQuery(query, null);
+        
+        while (data.moveToNext()){
+            Prediction tempPrediction = new Prediction(gameMap.get(data.getInt(2)));
+            tempPrediction.setID(data.getString(0));
+            tempPrediction.setPredictedOutcome(data.getDouble(1));
+        }
+        
+        Log.d(TAG, "Loaded everything from database");
+        
+        //return true if no problems
+        return true;
+        
+//        } catch (Exception e){
+//            e.printStackTrace();
+//            Log.d(TAG, "Didn't Load from database");
+//            return false;
+//        }
+        
     }
     
     // for future reference

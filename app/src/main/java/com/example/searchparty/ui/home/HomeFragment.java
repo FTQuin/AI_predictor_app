@@ -67,8 +67,11 @@ public class HomeFragment extends Fragment {
             
                 // test database
                 dbi.addGame(game);
+                dbi.addTeam(ATeam);
                 dbi.addTeam(BTeam);
                 dbi.addPrediction(prediction);
+                
+                dbi.loadDataFromDB();
                 
             }
         });

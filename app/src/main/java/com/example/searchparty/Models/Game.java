@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Game {
     
@@ -19,7 +20,7 @@ public class Game {
     private Team homeTeam, awayTeam;
     private Prediction prediction;
     Date startTime;
-    int ID;
+    String ID;
     
     public Game(Team homeTeam, Team awayTeam){
         this.homeTeam = homeTeam;
@@ -33,14 +34,14 @@ public class Game {
         this.startTime = new Date();
         startTime.setTime(startTime.getTime());
         
-        this.ID = 0;
+        this.ID = UUID.randomUUID().toString();
     }
     
     public boolean completeGame(){
         return homeTeam.completeGame(this) && awayTeam.completeGame(this);
     }
     
-    //Getters and Setters
+    //Getters
     public Team getHomeTeam() {
         return homeTeam;
     }
@@ -53,8 +54,25 @@ public class Game {
     public Date getStartTime() {
         return startTime;
     }
-    public int getID() {
+    public String getID() {
         return ID;
+    }
+    
+    //setters
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeam = awayTeam;
+    }
+    public void setPrediction(Prediction prediction) {
+        this.prediction = prediction;
+    }
+    public void setStartTime(Long startTime) {
+        this.startTime = new Date(startTime);
+    }
+    public void setID(String ID) {
+        this.ID = ID;
     }
     
     //toString
