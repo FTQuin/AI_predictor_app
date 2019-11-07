@@ -2,7 +2,8 @@ package com.example.searchparty.Models;
 
 import android.widget.TextView;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
 public class Game {
     
@@ -27,6 +28,9 @@ public class Game {
         awayTeam.addFutureGame(this);
         
         this.prediction = new Prediction(this);
+        
+        this.startTime = new Date();
+        startTime.setTime(startTime.getTime());
     }
     
     public boolean completeGame(){

@@ -17,11 +17,13 @@ public class Team {
     private String name;
     private List<Game> previousGames;
     private List<Game> futureGames;
+    private int ID;
     
     public Team(String name){
         this.name = name;
         this.previousGames = new ArrayList<>();
         this.futureGames = new ArrayList<>();
+        this.ID = 0;
     }
     
     //called when a team has completed a game
@@ -50,6 +52,9 @@ public class Team {
     }
     public List<Game> getFutureGames() {
         return futureGames;
+    }
+    public int getID() {
+        return ID;
     }
     
     //toString
