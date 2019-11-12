@@ -1,11 +1,14 @@
 package com.example.searchparty.Models;
 
+import android.support.annotation.Nullable;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.jar.Attributes;
 
@@ -79,4 +82,22 @@ public class Team {
                 "\tname='" + name + '\'' + "\n" +
                 "\t}";
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return name.equals(team.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+    
+    //TODO: override hash code so that if two teams are
+    // identical they have the same hash (same reason as .equals ^)
+    // will help with more thorough checks in database
+    //TODO: implement in Game and Prediction classes too
 }

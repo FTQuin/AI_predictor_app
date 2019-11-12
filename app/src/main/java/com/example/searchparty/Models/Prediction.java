@@ -1,5 +1,6 @@
 package com.example.searchparty.Models;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Prediction {
@@ -45,5 +46,20 @@ public class Prediction {
         return "Prediction{" + "\n" +
                 "\tpredictedOutcome=" + predictedOutcome + "\n" +
                 "\t}";
+    }
+    
+    //hashcode and equals methods
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prediction that = (Prediction) o;
+        return Double.compare(that.predictedOutcome, predictedOutcome) == 0 &&
+                game.equals(that.game);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(predictedOutcome, game);
     }
 }

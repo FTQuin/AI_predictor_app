@@ -1,9 +1,7 @@
 package com.example.searchparty.Models;
 
-import android.widget.TextView;
-
 import java.util.Date;
-import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Game {
@@ -84,5 +82,21 @@ public class Game {
                 "\t, prediction=" + prediction + "\n" +
                 "\t, startTime=" + startTime + "\n" +
                 "\t}";
+    }
+    
+    //hashcode and equals methods
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return homeTeam.equals(game.homeTeam) &&
+                awayTeam.equals(game.awayTeam) &&
+                startTime.equals(game.startTime);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(homeTeam, awayTeam, startTime);
     }
 }
