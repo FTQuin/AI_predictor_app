@@ -37,6 +37,7 @@
         android:id="@+id/SB_Predict_Game_Shot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:scrollbarSize="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -76,11 +77,12 @@
 
     <TextView
         android:id="@+id/TV_Predict_Game_Shot"
-        android:layout_width="45dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Shot %"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
@@ -89,8 +91,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3 Point %"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
@@ -99,8 +102,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fouls/Game"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
@@ -135,12 +139,12 @@
     <Button
         android:id="@+id/BTN_Predict_Game_GeneratePrediction"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Generate Prediction"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:text="Get Prediction"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <TextView
         android:id="@+id/homeTestProgTxt2"
@@ -148,6 +152,7 @@
         android:layout_height="wrap_content"
         android:text="75%"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/homeTestProgBar2"
         app:layout_constraintEnd_toStartOf="@+id/homeTestProgBar2"
         app:layout_constraintStart_toEndOf="@+id/homeTestProgBar2"
@@ -158,6 +163,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Prediction"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -182,6 +188,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="vs "
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/homeTestProgBar2"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -206,6 +213,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Team1"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -216,8 +224,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Team2"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
 </android.support.constraint.ConstraintLayout>
