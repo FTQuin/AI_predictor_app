@@ -95,9 +95,4 @@ public class Team {
     public int hashCode() {
         return Objects.hash(name);
     }
-    
-    //TODO: override hash code so that if two teams are
-    // identical they have the same hash (same reason as .equals ^)
-    // will help with more thorough checks in database
-    //TODO: implement in Game and Prediction classes too
 }

@@ -11,8 +11,10 @@ import com.example.searchparty.Models.Game;
 import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.Models.Team;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DatabaseInterface extends SQLiteOpenHelper {
@@ -59,9 +61,9 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "win_march.db";
     
     //lists of team, game, and prediction objects
-    Map<String, Game> gameMap;
-    Map<String, Prediction> predictionMap;
-    Map<String, Team> teamMap;
+    private static Map<String, Game> gameMap;
+    private static Map<String, Prediction> predictionMap;
+    private static Map<String, Team> teamMap;
     
     //strings for creating the databases
     //team attributes
@@ -77,7 +79,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     //prediction attributes
     private static final String PREDICTION_TABLE_NAME = "PREDICTION_TABLE";
     private static final String[][] PREDICTION_TABLE_COLS = {{"ID", "TEXT"},
-            {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "INTEGER"}};
+            {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "TEXT"}};
     
     public DatabaseInterface(Context context){
         super(context, DATABASE_NAME, null, 1);
@@ -232,7 +234,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     
     // reference for inserting content values for prediction class
     // {{"ID", "STRING"},
-    // {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "INTEGER"}}
+    // {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "TEXT"}}
     public boolean addPrediction(Prediction prediction) {
         SQLiteDatabase db = this.getWritableDatabase();
     
@@ -297,36 +299,39 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         query = "SELECT * FROM " + GAME_TABLE_NAME;
         data = db.rawQuery(query, null);
         
-        //TODO: add error checking if maps return null values
         while (data.moveToNext()){
-            Game tempGame = new Game(teamMap.get(data.getString(1)),
-                    teamMap.get(data.getString(2)));
-            tempGame.setID(data.getString(0));
-            tempGame.setStartTime(data.getLong(3));
-            //add game to its teams
-            if(tempGame.getStartTime().getTime() > new Date().getTime()){
-                tempGame.getHomeTeam().addFutureGame(tempGame);
-                tempGame.getAwayTeam().addFutureGame(tempGame);
-            } else {
-                tempGame.getHomeTeam().addPreviousGame(tempGame);
-                tempGame.getAwayTeam().addPreviousGame(tempGame);
+            if(teamMap.get(data.getString(1)) != null && teamMap.get(data.getString(2)) != null) {
+                Game tempGame = new Game(teamMap.get(data.getString(1)),
+                        teamMap.get(data.getString(2)));
+                tempGame.setID(data.getString(0));
+                tempGame.setStartTime(data.getLong(3));
+                //add game to its teams
+                if (tempGame.getStartTime().getTime() > new Date().getTime()) {
+                    tempGame.getHomeTeam().addFutureGame(tempGame);
+                    tempGame.getAwayTeam().addFutureGame(tempGame);
+                } else {
+                    tempGame.getHomeTeam().addPreviousGame(tempGame);
+                    tempGame.getAwayTeam().addPreviousGame(tempGame);
+                }
+    
+                gameMap.put(tempGame.getID(), tempGame);
             }
-            
-            gameMap.put(tempGame.getID(), tempGame);
         }
         
         //load predictions
         // {{"ID", "STRING"},
-        // {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "INTEGER"}}
+        // {"PREDICTED_OUTCOME", "DOUBLE"},{"GAME_ID", "TEXT"}}
         query = "SELECT * FROM " + PREDICTION_TABLE_NAME;
         data = db.rawQuery(query, null);
         
         while (data.moveToNext()){
-            Prediction tempPrediction = new Prediction(gameMap.get(data.getInt(2)));
-            tempPrediction.setID(data.getString(0));
-            tempPrediction.setPredictedOutcome(data.getDouble(1));
-            
-            predictionMap.put(tempPrediction.getID(), tempPrediction);
+            if(gameMap.get(data.getString(2)) != null) {
+                Prediction tempPrediction = new Prediction(gameMap.get(data.getString(2)));
+                tempPrediction.setID(data.getString(0));
+                tempPrediction.setPredictedOutcome(data.getDouble(1));
+    
+                predictionMap.put(tempPrediction.getID(), tempPrediction);
+            }
         }
         
         Log.d(TAG, "Loaded everything from database");
@@ -340,6 +345,20 @@ public class DatabaseInterface extends SQLiteOpenHelper {
 //            return false;
 //        }
         
+    }
+    
+    //returning a list of objects
+    public List<Team> getTeams(){
+        this.loadDataFromDB();
+        return new ArrayList<>(teamMap.values());
+    }
+    public List<Game> getGames(){
+        this.loadDataFromDB();
+        return new ArrayList<>(gameMap.values());
+    }
+    public List<Prediction> getPredictions(){
+        this.loadDataFromDB();
+        return new ArrayList<>(predictionMap.values());
     }
     
     // for future reference

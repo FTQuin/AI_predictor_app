@@ -65,6 +65,7 @@ public class Game {
     }
     public void setPrediction(Prediction prediction) {
         this.prediction = prediction;
+        if(prediction.getGame() != this) prediction.setGame(this);
     }
     public void setStartTime(Long startTime) {
         this.startTime = new Date(startTime);

@@ -35,6 +35,7 @@ public class Prediction {
     }
     public void setGame(Game game) {
         this.game = game;
+        if(game.getPrediction() != this) game.setPrediction(this);
     }
     public void setID(String ID) {
         this.ID = ID;
