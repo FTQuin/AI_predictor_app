@@ -148,17 +148,19 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                     + "' WHERE " + TEAM_TABLE_COLS[0][0] + " = '" + team.getID() + "'";
         
             db.execSQL(query);
-        
+    
+            db.close();
             return true;
         }
         else if(teamMap.containsValue(team)){
 
             String query = "UPDATE " + TEAM_TABLE_NAME + " SET "
-                    + TEAM_TABLE_COLS[0][0] + " = " + team.getID()
-                    + " WHERE " + TEAM_TABLE_COLS[1][0] + " = '" + team.getName() + "'";
+                    + TEAM_TABLE_COLS[0][0] + " = '" + team.getID()
+                    + "' WHERE " + TEAM_TABLE_COLS[1][0] + " = '" + team.getName() + "'";
             
             db.execSQL(query);
-            
+    
+            db.close();
             //TODO: check if there's a better way than blindly returning true
             return true;
             
@@ -175,9 +177,11 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     
             long result = db.insert(TEAM_TABLE_NAME, null, contentValues);
     
+            db.close();
             //if data is inserted incorrectly it will return -1
             return result == -1;
         }
+        
     }
     
     // reference for inserting content values for game class
@@ -195,7 +199,8 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                     + " WHERE " + GAME_TABLE_COLS[0][0] + " = '" + game.getID() + "'";
         
             db.execSQL(query);
-        
+    
+            db.close();
             return true;
         
         }
@@ -210,6 +215,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     
             db.execSQL(query);
     
+            db.close();
             return true;
         } else {
             ContentValues contentValues = new ContentValues();
@@ -228,6 +234,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             long result = db.insert(GAME_TABLE_NAME, null, contentValues);
     
             //if data is inserted incorrectly it will return -1
+            db.close();
             return result == -1;
         }
     }
@@ -246,6 +253,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     
             db.execSQL(query);
     
+            db.close();
             return true;
         }
         else if(predictionMap.containsValue(prediction)){
@@ -257,7 +265,8 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                     + PREDICTION_TABLE_COLS[2][0] + " = '" + prediction.getGame().getID() + "', ";
     
             db.execSQL(query);
-            
+    
+            db.close();
             return true;
         } else {
             ContentValues contentValues = new ContentValues();
@@ -274,6 +283,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             long result = db.insert(PREDICTION_TABLE_NAME, null, contentValues);
     
             //if data is inserted incorrectly it will return -1
+            db.close();
             return result == -1;
         }
     }
@@ -290,7 +300,9 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         while (data.moveToNext()){
             Team tempTeam = new Team(data.getString(1));
             tempTeam.setID(data.getString(0));
-            teamMap.put(tempTeam.getID(), tempTeam);
+            
+            if(!teamMap.containsValue(tempTeam))
+                teamMap.put(tempTeam.getID(), tempTeam);
         }
         
         //load games
@@ -314,7 +326,8 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                     tempGame.getAwayTeam().addPreviousGame(tempGame);
                 }
     
-                gameMap.put(tempGame.getID(), tempGame);
+                if(!gameMap.containsValue(tempGame))
+                    gameMap.put(tempGame.getID(), tempGame);
             }
         }
         
@@ -329,10 +342,14 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                 Prediction tempPrediction = new Prediction(gameMap.get(data.getString(2)));
                 tempPrediction.setID(data.getString(0));
                 tempPrediction.setPredictedOutcome(data.getDouble(1));
-    
-                predictionMap.put(tempPrediction.getID(), tempPrediction);
+                
+                if(!predictionMap.containsValue(tempPrediction))
+                    predictionMap.put(tempPrediction.getID(), tempPrediction);
             }
         }
+        
+        data.close();
+        db.close();
         
         Log.d(TAG, "Loaded everything from database");
         
