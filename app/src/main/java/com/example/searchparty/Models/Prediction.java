@@ -1,6 +1,7 @@
 package com.example.searchparty.Models;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
 
 public class Prediction {
@@ -13,7 +14,7 @@ public class Prediction {
     private String ID;
     
     public Prediction(Game currentGame){
-        this.predictedOutcome = 0;
+        this.predictedOutcome = new Random().nextDouble()*100;
         this.game = currentGame;
         this.ID = UUID.randomUUID().toString();
     }
