@@ -14,7 +14,9 @@ public class Prediction {
     private String ID;
     
     public Prediction(Game currentGame){
+        //TODO: change this to initialize to zero once it no longer needs to be tested
         this.predictedOutcome = new Random().nextDouble()*100;
+
         this.game = currentGame;
         this.ID = UUID.randomUUID().toString();
     }

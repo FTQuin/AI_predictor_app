@@ -18,9 +18,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.example.searchparty.Models.Prediction;
+import com.example.searchparty.dummy.DummyContent;
+import com.example.searchparty.ui.future_games.FutureGamesFragment;
 import com.example.searchparty.ui.saved_prediction.SavedPredictionFragment;
 
-public class MainActivity extends AppCompatActivity implements SavedPredictionFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements SavedPredictionFragment.OnListFragmentInteractionListener, FutureGamesFragment.OnListFragmentInteractionListener {
     
     private AppBarConfiguration mAppBarConfiguration;
     
@@ -60,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements SavedPredictionFr
     
     @Override
     public void onListFragmentInteraction(Prediction prediction) {
+    
+    }
+    
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
     
     }
 }
