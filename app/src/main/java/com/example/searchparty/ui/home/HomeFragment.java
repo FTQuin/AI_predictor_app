@@ -19,6 +19,8 @@ import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 
+import java.util.Date;
+
 public class HomeFragment extends Fragment {
     
     private HomeViewModel homeViewModel;
@@ -50,12 +52,6 @@ public class HomeFragment extends Fragment {
         
         //test databaseInterface
         final DatabaseInterface dbi = new DatabaseInterface(this.getContext());
-    
-        //test teams
-        final Team ATeam = new Team("ATeam");
-        final Team BTeam = new Team("BTeam");
-        final Game game = new Game(BTeam, ATeam);
-        final Prediction prediction = new Prediction(game);
         
         testBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +62,13 @@ public class HomeFragment extends Fragment {
 //                progTxt.setText(newProg.toString()+"%");
             
                 // test database
+                String modifier = Long.toHexString(new Date().getTime());
+                modifier = modifier.substring(modifier.length()-1);
+                final Team ATeam = new Team("Away Team " + modifier.toUpperCase());
+                final Team BTeam = new Team("Home Team " + modifier.toUpperCase());
+                final Game game = new Game(BTeam, ATeam);
+                final Prediction prediction = new Prediction(game);
+                
                 dbi.addGame(game);
                 dbi.addTeam(ATeam);
                 dbi.addTeam(BTeam);
