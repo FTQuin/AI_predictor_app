@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.ui.dummy.DummyContent;
 import com.example.searchparty.ui.saved_prediction.SavedPredictionFragment;
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SavedPredictionFr
     }
     
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Prediction prediction) {
     
     }
 }

@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.searchparty.DatabaseInterfaces.DatabaseInterface;
+import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.R;
-import com.example.searchparty.ui.dummy.DummyContent;
-import com.example.searchparty.ui.dummy.DummyContent.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -68,7 +68,7 @@ public class SavedPredictionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MySavedPredictionRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MySavedPredictionRecyclerViewAdapter(new DatabaseInterface(this.getContext()).getPredictions(), mListener));
         }
         return view;
     }
@@ -103,6 +103,6 @@ public class SavedPredictionFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Prediction item);
     }
 }

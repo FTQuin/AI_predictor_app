@@ -6,23 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.R;
 import com.example.searchparty.ui.saved_prediction.SavedPredictionFragment.OnListFragmentInteractionListener;
-import com.example.searchparty.ui.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link com.example.searchparty.Models.Prediction} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MySavedPredictionRecyclerViewAdapter extends RecyclerView.Adapter<MySavedPredictionRecyclerViewAdapter.ViewHolder> {
     
-    private final List<DummyItem> mValues;
+    private final List<Prediction> mValues;
     private final OnListFragmentInteractionListener mListener;
     
-    public MySavedPredictionRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MySavedPredictionRecyclerViewAdapter(List<Prediction> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +37,7 @@ public class MySavedPredictionRecyclerViewAdapter extends RecyclerView.Adapter<M
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).getGame().getHomeTeam().getName()+" VS. "+mValues.get(position).getGame().getAwayTeam().getName());
         
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +60,7 @@ public class MySavedPredictionRecyclerViewAdapter extends RecyclerView.Adapter<M
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Prediction mItem;
         
         public ViewHolder(View view) {
             super(view);
