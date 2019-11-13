@@ -9,9 +9,9 @@
             android:icon="@drawable/homebutton"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_history"
+            android:id="@+id/nav_saved_predictions"
             android:icon="@drawable/history"
-            android:title="@string/menu_history" />
+            android:title="@string/menu_saved_predictions" />
         <item
             android:id="@+id/nav_predict_game"
             android:icon="@drawable/add"
