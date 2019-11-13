@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.searchparty.Models.Game;
 import com.example.searchparty.Models.Prediction;
+import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 import com.example.searchparty.ui.saved_prediction.SavedPredictionFragment.OnListFragmentInteractionListener;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,6 +26,13 @@ public class MySavedPredictionRecyclerViewAdapter extends RecyclerView.Adapter<M
     private final OnListFragmentInteractionListener mListener;
     
     public MySavedPredictionRecyclerViewAdapter(List<Prediction> items, OnListFragmentInteractionListener listener) {
+        items.add(0, new Prediction(new Game(new Team("Test 1"), new Team("Test 2"))));
+        items.sort(new Comparator<Prediction>() {
+            @Override
+            public int compare(Prediction o1, Prediction o2) {
+                return ((Long)(o2.getGame().getStartTime().getTime() - o1.getGame().getStartTime().getTime())).intValue();
+            }
+        });
         mValues = items;
         mListener = listener;
     }
