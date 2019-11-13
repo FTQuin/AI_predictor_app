@@ -14,4 +14,5 @@
     <string name="menu_outcome">Outcome</string>
     <string name="menu_predict_game">Predict Game</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_saved_predictions">Saved Predictions</string>
 </resources>

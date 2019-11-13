@@ -17,7 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.searchparty.ui.dummy.DummyContent;
+import com.example.searchparty.ui.saved_prediction.SavedPredictionFragment;
+
+public class MainActivity extends AppCompatActivity implements SavedPredictionFragment.OnListFragmentInteractionListener {
     
     private AppBarConfiguration mAppBarConfiguration;
     
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_history, R.id.nav_predict_game,
+                R.id.nav_home, R.id.nav_saved_predictions, R.id.nav_predict_game,
                 R.id.nav_settings, R.id.nav_outcome, R.id.nav_future_games)
                 .setDrawerLayout(drawer)
                 .build();
@@ -53,5 +56,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    
     }
 }
