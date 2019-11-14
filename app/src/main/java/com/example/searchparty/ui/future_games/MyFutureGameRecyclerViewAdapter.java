@@ -27,17 +27,15 @@ public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutu
     private final OnListFragmentInteractionListener mListener;
     
     public MyFutureGameRecyclerViewAdapter(List<Game> items, OnListFragmentInteractionListener listener) {
-        //add a game that will be at the very top of the list as a buffer behind the tool bar
-        Game topGame =  new Game(new Team("Test 1"), new Team("Test 2"));
-        topGame.setStartTime(Long.MAX_VALUE);
-        items.add(0, topGame);
-    
         items.sort(new Comparator<Game>() {
             @Override
             public int compare(Game o1, Game o2) {
-                return ((Long)(o2.getStartTime().getTime() - o1.getStartTime().getTime())).intValue();
+                return ((Long)(o1.getStartTime().getTime() - o2.getStartTime().getTime())).intValue();
             }
         });
+        //add a game that will be at the very top of the list as a buffer behind the tool bar
+        items.add(0, new Game(new Team("Buffer 1"), new Team("Buffer 2")));
+        
         mValues = items;
         mListener = listener;
     }

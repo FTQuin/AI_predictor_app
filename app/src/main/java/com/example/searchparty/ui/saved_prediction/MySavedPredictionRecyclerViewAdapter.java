@@ -27,17 +27,15 @@ public class MySavedPredictionRecyclerViewAdapter extends RecyclerView.Adapter<M
     private final OnListFragmentInteractionListener mListener;
     
     public MySavedPredictionRecyclerViewAdapter(List<Prediction> items, OnListFragmentInteractionListener listener) {
-        //add a game that will be at the very top of the list as a buffer behind the tool bar
-        Prediction topPred =  new Prediction(new Game(new Team("Test 1"), new Team("Test 2")));
-        topPred.getGame().setStartTime(Long.MAX_VALUE);
-        items.add(0, topPred);
-        
         items.sort(new Comparator<Prediction>() {
             @Override
             public int compare(Prediction o1, Prediction o2) {
                 return ((Long)(o2.getGame().getStartTime().getTime() - o1.getGame().getStartTime().getTime())).intValue();
             }
         });
+        //add a game that will be at the very top of the list as a buffer behind the tool bar
+        items.add(0, new Prediction(new Game(new Team("Buffer 1"), new Team("Buffer 2"))));
+        
         mValues = items;
         mListener = listener;
     }

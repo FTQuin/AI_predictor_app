@@ -20,6 +20,7 @@ import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 
 import java.util.Date;
+import java.util.Random;
 
 public class HomeFragment extends Fragment {
     
@@ -70,7 +71,7 @@ public class HomeFragment extends Fragment {
                 final Prediction prediction = new Prediction(game);
                 
                 if("abcdef".contains(modifier)) {
-                    game.setStartTime(game.getStartTime().getTime()+(1000*60*60*24*7));
+                    game.setStartTime(game.getStartTime().getTime()+(1000*60*60*24*(new Random().nextInt(31))));
                 }
                 
                 dbi.addGame(game);
