@@ -15,12 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutureGameRecyclerViewAdapter.ViewHolder> {
     
     private final List<Game> mValues;
@@ -53,11 +49,8 @@ public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutu
         holder.mItem = currGame;
         holder.mTeamsView.setText(currGame.getHomeTeam().getName() + " VS. " +
                 currGame.getAwayTeam().getName());
-    
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-//        String DateToStr = format.format(curDate);
         
-        holder.mStartTimeView.setText(new SimpleDateFormat("MMM dd, hh:mm").format(currGame.getStartTime()));
+        holder.mStartTimeView.setText(new SimpleDateFormat("MMM dd, hh:mm", Locale.getDefault()).format(currGame.getStartTime()));
         
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
