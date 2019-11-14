@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.searchparty.Models.Game;
+import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 import com.example.searchparty.ui.future_games.FutureGamesFragment.OnListFragmentInteractionListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -25,6 +27,17 @@ public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutu
     private final OnListFragmentInteractionListener mListener;
     
     public MyFutureGameRecyclerViewAdapter(List<Game> items, OnListFragmentInteractionListener listener) {
+        //add a game that will be at the very top of the list as a buffer behind the tool bar
+        Game topGame =  new Game(new Team("Test 1"), new Team("Test 2"));
+        topGame.setStartTime(Long.MAX_VALUE);
+        items.add(0, topGame);
+    
+        items.sort(new Comparator<Game>() {
+            @Override
+            public int compare(Game o1, Game o2) {
+                return ((Long)(o2.getStartTime().getTime() - o1.getStartTime().getTime())).intValue();
+            }
+        });
         mValues = items;
         mListener = listener;
     }
