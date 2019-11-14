@@ -50,7 +50,7 @@ public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutu
         holder.mTeamsView.setText(currGame.getHomeTeam().getName() + " VS. " +
                 currGame.getAwayTeam().getName());
         
-        holder.mStartTimeView.setText(new SimpleDateFormat("MMM dd, hh:mm", Locale.getDefault()).format(currGame.getStartTime()));
+        holder.mStartTimeView.setText(new SimpleDateFormat("MMM dd, hh:mm aa", Locale.getDefault()).format(currGame.getStartTime()));
         
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
