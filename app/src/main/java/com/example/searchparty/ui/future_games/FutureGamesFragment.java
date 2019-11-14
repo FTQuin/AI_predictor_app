@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.searchparty.DatabaseInterfaces.DatabaseInterface;
+import com.example.searchparty.Models.Game;
 import com.example.searchparty.R;
-import com.example.searchparty.dummy.DummyContent;
-import com.example.searchparty.dummy.DummyContent.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -68,7 +68,7 @@ public class FutureGamesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyFutureGameRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyFutureGameRecyclerViewAdapter(new DatabaseInterface(this.getContext()).getFutureGames(), mListener));
         }
         return view;
     }
@@ -103,6 +103,6 @@ public class FutureGamesFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Game item);
     }
 }

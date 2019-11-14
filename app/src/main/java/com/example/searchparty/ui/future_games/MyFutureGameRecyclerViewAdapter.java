@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.searchparty.Models.Game;
 import com.example.searchparty.R;
 import com.example.searchparty.ui.future_games.FutureGamesFragment.OnListFragmentInteractionListener;
-import com.example.searchparty.dummy.DummyContent.DummyItem;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -19,10 +21,10 @@ import java.util.List;
  */
 public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutureGameRecyclerViewAdapter.ViewHolder> {
     
-    private final List<DummyItem> mValues;
+    private final List<Game> mValues;
     private final OnListFragmentInteractionListener mListener;
     
-    public MyFutureGameRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyFutureGameRecyclerViewAdapter(List<Game> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,9 +38,15 @@ public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutu
     
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        Game currGame = mValues.get(position);
+        holder.mItem = currGame;
+        holder.mTeamsView.setText(currGame.getHomeTeam().getName() + " VS. " +
+                currGame.getAwayTeam().getName());
+    
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+//        String DateToStr = format.format(curDate);
+        
+        holder.mStartTimeView.setText(new SimpleDateFormat("MMM dd, hh:mm").format(currGame.getStartTime()));
         
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +67,20 @@ public class MyFutureGameRecyclerViewAdapter extends RecyclerView.Adapter<MyFutu
     
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mTeamsView;
+        public final TextView mStartTimeView;
+        public Game mItem;
         
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mTeamsView = (TextView) view.findViewById(R.id.future_item_teams);
+            mStartTimeView = (TextView) view.findViewById(R.id.future_item_start_time);
         }
         
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mStartTimeView.getText() + "'";
         }
     }
 }

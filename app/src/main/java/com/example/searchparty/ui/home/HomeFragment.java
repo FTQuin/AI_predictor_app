@@ -68,7 +68,10 @@ public class HomeFragment extends Fragment {
                 final Team BTeam = new Team("Home Team " + modifier.toUpperCase());
                 final Game game = new Game(BTeam, ATeam);
                 final Prediction prediction = new Prediction(game);
-                if("ABCDEF".contains(modifier)) game.setStartTime(game.getStartTime().getTime()+(1000*60*60*24));
+                
+                if("abcdef".contains(modifier)) {
+                    game.setStartTime(game.getStartTime().getTime()+(1000*60*60*24*7));
+                }
                 
                 dbi.addGame(game);
                 dbi.addTeam(ATeam);
