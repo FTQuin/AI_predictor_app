@@ -64,6 +64,8 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     private static Map<String, Game> gameMap;
     private static Map<String, Prediction> predictionMap;
     private static Map<String, Team> teamMap;
+    private static List<String> futureGameIDs;
+    private static List<String> pastGameIDs;
     
     //strings for creating the databases
     //team attributes
@@ -87,6 +89,8 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         gameMap = new HashMap<>();
         predictionMap = new HashMap<>();
         teamMap = new HashMap<>();
+        futureGameIDs = new ArrayList<>();
+        pastGameIDs = new ArrayList<>();
     }
     
     @Override
@@ -321,9 +325,11 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                 if (tempGame.getStartTime().getTime() > new Date().getTime()) {
                     tempGame.getHomeTeam().addFutureGame(tempGame);
                     tempGame.getAwayTeam().addFutureGame(tempGame);
+                    futureGameIDs.add(tempGame.getID());
                 } else {
                     tempGame.getHomeTeam().addPreviousGame(tempGame);
                     tempGame.getAwayTeam().addPreviousGame(tempGame);
+                    pastGameIDs.add(tempGame.getID());
                 }
     
                 if(!gameMap.containsValue(tempGame))
@@ -376,6 +382,24 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     public List<Prediction> getPredictions(){
         this.loadDataFromDB();
         return new ArrayList<>(predictionMap.values());
+    }
+    public List<Game> getFutureGames(){
+        this.loadDataFromDB();
+        
+        List<Game> output = new ArrayList<>();
+        for(String id:futureGameIDs)
+            output.add(gameMap.get(id));
+        
+        return output;
+    }
+    public List<Game> getPastGames() {
+        this.loadDataFromDB();
+        
+        List<Game> output = new ArrayList<>();
+        for (String id : pastGameIDs)
+            output.add(gameMap.get(id));
+    
+        return output;
     }
     
     // for future reference
