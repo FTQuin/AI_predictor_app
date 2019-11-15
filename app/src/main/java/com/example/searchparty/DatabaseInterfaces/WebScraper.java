@@ -15,7 +15,7 @@ public class WebScraper {
         try {
             URL url = new URL("http://google.com/");
             HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
-            String line = null;
+            String line;
             StringBuilder tmp = new StringBuilder();
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
         
@@ -26,6 +26,7 @@ public class WebScraper {
             Document doc = Jsoup.parse(tmp.toString());
             
         } catch(Exception e){
+            e.printStackTrace();
         }
     }
 
