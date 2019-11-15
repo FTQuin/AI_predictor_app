@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.searchparty.DatabaseInterfaces.DatabaseInterface;
+import com.example.searchparty.DatabaseInterfaces.WebScraper;
 import com.example.searchparty.Models.Game;
 import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.Models.Team;
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment {
         
         //text view live data observer example
         final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
@@ -85,7 +86,8 @@ public class HomeFragment extends Fragment {
         testBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            
+                WebScraper ws = new WebScraper();
+                ws.scrape();
                 // test database
 //                Cursor data = dbi.getData();
 //                data.moveToNext();
