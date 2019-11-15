@@ -9,19 +9,35 @@
         android:id="@+id/nav_home"
         android:name="com.example.searchparty.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_settings"
+            app:destination="@id/nav_settings" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_future_games"
+            app:destination="@id/nav_future_games" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_saved_predictions"
+            app:destination="@id/nav_saved_predictions" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_saved_predictions"
         android:name="com.example.searchparty.ui.saved_prediction.SavedPredictionFragment"
         android:label="@string/menu_saved_predictions"
-        tools:layout="@layout/fragment_saved_prediction" />
+        tools:layout="@layout/fragment_saved_prediction" >
+        <action
+            android:id="@+id/action_nav_saved_predictions_to_nav_outcome"
+            app:destination="@id/nav_outcome" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_predict_game"
         android:name="com.example.searchparty.ui.predict_game.PredictGameFragment"
         android:label="@string/menu_predict_game"
-        tools:layout="@layout/fragment_predict_game" />
+        tools:layout="@layout/fragment_predict_game" >
+        <argument android:name="FutureGame" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_settings"
@@ -39,5 +55,9 @@
         android:id="@+id/nav_future_games"
         android:name="com.example.searchparty.ui.future_games.FutureGamesFragment"
         android:label="@string/menu_future_games"
-        tools:layout="@layout/fragment_future_games" />
+        tools:layout="@layout/fragment_future_games" >
+        <action
+            android:id="@+id/action_nav_future_games_to_nav_predict_game"
+            app:destination="@id/nav_predict_game" />
+    </fragment>
 </navigation>
