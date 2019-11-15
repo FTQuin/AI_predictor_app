@@ -402,6 +402,18 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         return output;
     }
     
+    public Team getTeam(String ID){
+        this.loadDataFromDB();
+        return teamMap.get(ID);
+    }
+    public Game getGame(String ID){
+        this.loadDataFromDB();
+        return gameMap.get(ID);
+    }
+    public Prediction getPrediction(String ID){
+        this.loadDataFromDB();
+        return predictionMap.get(ID);
+    }
     // for future reference
 //
 //    /**
