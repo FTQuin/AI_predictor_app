@@ -1,16 +1,11 @@
 package com.example.searchparty.Models;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.jar.Attributes;
 
 public class Team {
     /*

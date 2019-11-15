@@ -1,15 +1,13 @@
 package com.example.searchparty.ui.saved_prediction;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.searchparty.Models.Game;
 import com.example.searchparty.Models.Prediction;
-import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 import com.example.searchparty.ui.saved_prediction.SavedPredictionFragment.OnListFragmentInteractionListener;
 
