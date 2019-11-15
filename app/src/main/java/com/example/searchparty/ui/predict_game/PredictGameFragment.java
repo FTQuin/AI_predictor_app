@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.searchparty.DatabaseInterfaces.DatabaseInterface;
 import com.example.searchparty.Models.Game;
 import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
@@ -25,12 +26,14 @@ public class PredictGameFragment extends Fragment {
                 ViewModelProviders.of(this).get(PredictGameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_predict_game, container, false);
         final TextView textView = root.findViewById(R.id.text_predict_game);
-        predictGameViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+//        predictGameViewModel.getText().observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
+        
+        textView.setText(new DatabaseInterface(getContext()).getGame(PredictGameFragmentArgs.fromBundle(getArguments()).getFutureGameID()).getHomeTeam().getName());
     
         Team ATeam = new Team("ATeam");
         Team BTeam = new Team("BTeam");

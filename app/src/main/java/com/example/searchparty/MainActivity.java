@@ -7,10 +7,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.searchparty.ui.future_games.FutureGamesFragmentDirections;
+import com.example.searchparty.ui.predict_game.PredictGameFragmentArgs;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -68,15 +71,8 @@ public class MainActivity extends AppCompatActivity implements SavedPredictionFr
     }
     
     private void changeFragment(Game game){
-        Navigation.findNavController(findViewById(R.id.nav_host_fragment)).navigate(R.id.action_nav_future_games_to_nav_predict_game);
-        final FragmentTransaction ft = fm.beginTransaction();
-        Fragment frag = new PredictGameFragment();
-        Bundle gameBundle = new Bundle();
-        gameBundle.putString("gameID", game.getID());
-        frag.setArguments(gameBundle);
-        ft.replace(R.id.nav_host_fragment, frag);
-        ft.addToBackStack("frags");
-        ft.commit();
+        NavDirections directions = FutureGamesFragmentDirections.actionNavFutureGamesToNavPredictGame(game.getID());
+        Navigation.findNavController(findViewById(R.id.nav_host_fragment)).navigate(directions);
     }
     
     

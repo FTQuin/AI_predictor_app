@@ -36,7 +36,8 @@
         android:name="com.example.searchparty.ui.predict_game.PredictGameFragment"
         android:label="@string/menu_predict_game"
         tools:layout="@layout/fragment_predict_game" >
-        <argument android:name="FutureGame" />
+        <argument android:name="FutureGameID"
+            app:argType="string" />
     </fragment>
 
     <fragment
