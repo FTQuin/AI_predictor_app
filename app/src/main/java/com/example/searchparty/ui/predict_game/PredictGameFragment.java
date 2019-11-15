@@ -32,9 +32,12 @@ public class PredictGameFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
+        if(getArguments() != null){
+            String futureGameID = PredictGameFragmentArgs.fromBundle(getArguments()).getFutureGameID();
+            if (!futureGameID.equals(""))
+                textView.setText(new DatabaseInterface(getContext()).getGame(futureGameID).getHomeTeam().getName());
+        }
         
-        textView.setText(new DatabaseInterface(getContext()).getGame(PredictGameFragmentArgs.fromBundle(getArguments()).getFutureGameID()).getHomeTeam().getName());
-    
         Team ATeam = new Team("ATeam");
         Team BTeam = new Team("BTeam");
     
