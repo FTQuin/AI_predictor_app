@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.searchparty.DatabaseInterfaces.WebScraper;
 import com.example.searchparty.ui.future_games.FutureGamesFragmentDirections;
 import com.example.searchparty.ui.predict_game.PredictGameFragmentArgs;
 import com.google.android.material.navigation.NavigationView;
@@ -51,9 +52,11 @@ public class MainActivity extends AppCompatActivity implements SavedPredictionFr
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         
-        
-    
         fm = getSupportFragmentManager();
+    
+    
+        WebScraper ws = new WebScraper();
+        ws.scrape(this);
     }
     
     @Override

@@ -214,8 +214,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                     + GAME_TABLE_COLS[0][0] + " = " + game.getID()
                     + " WHERE "
                     + GAME_TABLE_COLS[1][0] + " = '" + game.getHomeTeam().getID() + "', "
-                    + GAME_TABLE_COLS[2][0] + " = '" + game.getAwayTeam().getID() + "', "
-                    + GAME_TABLE_COLS[3][0] + " = '" + game.getStartTime().getTime() + "' ";
+                    + GAME_TABLE_COLS[2][0] + " = '" + game.getAwayTeam().getID() + "'";
     
             db.execSQL(query);
     
@@ -233,7 +232,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             //date
             contentValues.put(GAME_TABLE_COLS[3][0], game.getStartTime().getTime());
     
-            Log.d(TAG, "addData: Adding items to " + GAME_TABLE_NAME + ": " + game.hashCode());
+            Log.d(TAG, "addData: Adding items to " + GAME_TABLE_NAME + ": " + game.getID());
     
             long result = db.insert(GAME_TABLE_NAME, null, contentValues);
     
@@ -282,7 +281,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             //game
             contentValues.put(PREDICTION_TABLE_COLS[2][0], prediction.getGame().getID());
     
-            Log.d(TAG, "addData: Adding items to " + PREDICTION_TABLE_NAME + ": " + prediction.hashCode());
+            Log.d(TAG, "addData: Adding items to " + PREDICTION_TABLE_NAME + ": " + prediction.getID());
     
             long result = db.insert(PREDICTION_TABLE_NAME, null, contentValues);
     
@@ -387,8 +386,9 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         this.loadDataFromDB();
         
         List<Game> output = new ArrayList<>();
-        for(String id:futureGameIDs)
-            output.add(gameMap.get(id));
+        for(Game game: gameMap.values())
+            if(game.getStartTime().getTime() > new Date().getTime())
+                output.add(game);
         
         return output;
     }
@@ -396,8 +396,9 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         this.loadDataFromDB();
         
         List<Game> output = new ArrayList<>();
-        for (String id : pastGameIDs)
-            output.add(gameMap.get(id));
+        for(Game game: gameMap.values())
+            if(game.getStartTime().getTime() < new Date().getTime())
+                output.add(game);
     
         return output;
     }

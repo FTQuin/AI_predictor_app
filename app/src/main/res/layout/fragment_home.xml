@@ -6,65 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/menu_home"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ProgressBar
         android:id="@+id/homeTestProgBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="144dp"
         android:layout_height="144dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
         android:indeterminate="false"
-        android:progress="100"
+        android:progress="75"
         android:progressDrawable="@drawable/circle_prog_bar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_home" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Win %"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/homeTestProgBar"
-        app:layout_constraintEnd_toEndOf="@+id/homeTestProgBar"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/homeTestProgBar" />
-
-    <Button
-        android:id="@+id/homeTestBtn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTestProgBar" />
-
-    <Button
-        android:id="@+id/homeTestBtn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTestBtn1" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_home_next_game" />
 
     <TextView
         android:id="@+id/homeTestProgTxt"
@@ -74,7 +28,30 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/homeTestProgBar"
         app:layout_constraintEnd_toEndOf="@+id/homeTestProgBar"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/homeTestProgBar"
-        app:layout_constraintTop_toTopOf="@+id/homeTestProgBar" />
+        app:layout_constraintTop_toTopOf="@+id/homeTestProgBar"
+        app:layout_constraintVertical_bias="0.504" />
+
+    <TextView
+        android:id="@+id/tv_home_next_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Tennesee VS. Okalahoma"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_future_games_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeTestProgBar"
+        tools:listitem="@layout/fragment_future_games_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

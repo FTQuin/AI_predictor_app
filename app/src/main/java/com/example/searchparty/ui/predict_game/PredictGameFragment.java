@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -19,40 +20,40 @@ import com.example.searchparty.R;
 public class PredictGameFragment extends Fragment {
     
     private PredictGameViewModel predictGameViewModel;
+    DatabaseInterface dbi;
     
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         predictGameViewModel =
                 ViewModelProviders.of(this).get(PredictGameViewModel.class);
         View root = inflater.inflate(R.layout.fragment_predict_game, container, false);
-        final TextView textView = root.findViewById(R.id.text_predict_game);
+        final TextView tvHomeTeam = root.findViewById(R.id.TV_Predict_Game_Team1);
+        final TextView tvAwayTeam = root.findViewById(R.id.TV_Predict_Game_Team2);
+        final ProgressBar pbCircle = root.findViewById(R.id.Pb_Predict_Game_Circle);
+        final TextView tvPercent = root.findViewById(R.id.Tv_Predict_Game_Prog_Percent);
+        
+        dbi = new DatabaseInterface(getContext());
 //        predictGameViewModel.getText().observe(this, new Observer<String>() {
 //            @Override
 //            public void onChanged(@Nullable String s) {
 //                textView.setText(s);
 //            }
 //        });
-        if(getArguments() != null){
-            String futureGameID = PredictGameFragmentArgs.fromBundle(getArguments()).getFutureGameID();
-            if (!futureGameID.equals(""))
-                textView.setText(new DatabaseInterface(getContext()).getGame(futureGameID).getHomeTeam().getName());
+        try {
+            if (getArguments() != null) {
+                String futureGameID = PredictGameFragmentArgs.fromBundle(getArguments()).getFutureGameID();
+                if (!futureGameID.equals("")) {
+                    Game game = dbi.getGame(futureGameID);
+                    tvHomeTeam.setText(game.getHomeTeam().getName());
+                    tvAwayTeam.setText(game.getAwayTeam().getName());
+                    
+                    pbCircle.setProgress(((Double)game.getPrediction().getPredictedOutcome()).intValue());
+                    tvPercent.setText(((Integer)(((Double)game.getPrediction().getPredictedOutcome()).intValue())).toString() + "%");
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        
-        Team ATeam = new Team("ATeam");
-        Team BTeam = new Team("BTeam");
-    
-        new Game(ATeam, BTeam);
-        new Game(BTeam, ATeam).completeGame();
-        
-//        TextView txtTest = root.findViewById(R.id.txt_predict_test);
-        
-        String outstr = "";
-    
-        outstr = ATeam.getFutureGames().get(0).toString();
-        outstr = outstr + "\n\n" + BTeam.getPreviousGames().get(0).toString();
-        
-//        txtTest.setText(outstr);
-        
         return root;
     }
 }
