@@ -3,7 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-        <item name="drawerArrowStyle">@style/DrawerIcon</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">#0a7ec2</item>
@@ -20,7 +19,4 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">#FFFFFF</item>
-    </style>
 </resources>
