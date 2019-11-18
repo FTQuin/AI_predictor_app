@@ -76,7 +76,9 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     //game attributes
     private static final String GAME_TABLE_NAME = "GAME_TABLE";
     private static final String[][] GAME_TABLE_COLS = {{"ID", "TEXT"},
-            {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"START_TIME", "LONG"}};
+            {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"START_TIME", "LONG"}, {"HPTS", "DOUBLE"},
+            {"HFGM", "DOUBLE"}, {"H3PM", "DOUBLE"}, {"HAST", "DOUBLE"}, {"HTO", "DOUBLE"},
+            {"APTS", "DOUBLE"}, {"AFGM", "DOUBLE"}, {"A3PM", "DOUBLE"}, {"AAST", "DOUBLE"}, {"ATO", "DOUBLE"}};
     
     //prediction attributes
     private static final String PREDICTION_TABLE_NAME = "PREDICTION_TABLE";
@@ -190,7 +192,8 @@ public class DatabaseInterface extends SQLiteOpenHelper {
     
     // reference for inserting content values for game class
     // {{"ID", "STRING"},
-    // {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"START_TIME", "Long"}}
+    // {"HOME_TEAM_ID", "TEXT"}, {"AWAY_TEAM_ID", "TEXT"}, {"START_TIME", "Long"}, {"PTS", "DOUBLE"},
+    // {"FGM", "DOUBLE"}, {"3PM", "DOUBLE"}, {"AST", "DOUBLE"}, {"TOS", "DOUBLE"}};
     public boolean addGame(Game game) {
         SQLiteDatabase db = this.getWritableDatabase();
         
@@ -199,8 +202,11 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             String query = "UPDATE " + GAME_TABLE_NAME + " SET "
                     + GAME_TABLE_COLS[1][0] + " = '" + game.getHomeTeam().getID() + "', "
                     + GAME_TABLE_COLS[2][0] + " = '" + game.getAwayTeam().getID() + "', "
-                    + GAME_TABLE_COLS[3][0] + " = '" + game.getStartTime().getTime() + "' "
-                    + " WHERE " + GAME_TABLE_COLS[0][0] + " = '" + game.getID() + "'";
+                    + GAME_TABLE_COLS[3][0] + " = '" + game.getStartTime().getTime() +"'";
+            for (int i = 0; i < game.getStatsMap().values().size(); i++) {
+                query +=  ", ''" + GAME_TABLE_COLS[i+4][0] + " = '" + game.getStatsMap().get(GAME_TABLE_COLS[i+4][1]);
+            }
+            query += "' WHERE " + GAME_TABLE_COLS[0][0] + " = '" + game.getID() + "'";
         
             db.execSQL(query);
     
@@ -231,6 +237,11 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             contentValues.put(GAME_TABLE_COLS[2][0], game.getAwayTeam().getID());
             //date
             contentValues.put(GAME_TABLE_COLS[3][0], game.getStartTime().getTime());
+            
+            //stats
+            for (int i = 0; i < game.getStatsMap().size(); i++) {
+                contentValues.put(GAME_TABLE_COLS[4+i][0], game.getStatsMap().get(GAME_TABLE_COLS[4+i][1]));
+            }
     
             Log.d(TAG, "addData: Adding items to " + GAME_TABLE_NAME + ": " + game.getID());
     
@@ -320,6 +331,14 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                         teamMap.get(data.getString(2)));
                 tempGame.setID(data.getString(0));
                 tempGame.setStartTime(data.getLong(3));
+    
+                //stats
+                Map<String, Double> tempMap = tempGame.getStatsMap();
+                for (int i = 0; i < tempGame.getStatsMap().values().size(); i++) {
+                    tempMap.put(GAME_TABLE_COLS[4+i][0], data.getDouble(4+i));
+                }
+                tempGame.setStatsMap(tempMap);
+                
                 //add game to its teams
                 if (tempGame.getStartTime().getTime() > new Date().getTime()) {
                     tempGame.getHomeTeam().addFutureGame(tempGame);

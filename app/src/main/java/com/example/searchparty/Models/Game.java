@@ -1,6 +1,10 @@
 package com.example.searchparty.Models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,6 +23,7 @@ public class Game {
     private Prediction prediction;
     Date startTime;
     String ID;
+    private Map<String, Double> statsMap;
     
     public Game(Team homeTeam, Team awayTeam){
         this.homeTeam = homeTeam;
@@ -33,6 +38,18 @@ public class Game {
         startTime.setTime(startTime.getTime());
         
         this.ID = UUID.randomUUID().toString();
+    
+        this.statsMap = new HashMap<>(10);
+        statsMap.put("HPTS", 0.);
+        statsMap.put("HFGM", 0.);
+        statsMap.put("H3PM", 0.);
+        statsMap.put("HAST", 0.);
+        statsMap.put("HTO", 0.);
+        statsMap.put("APTS", 0.);
+        statsMap.put("AFGM", 0.);
+        statsMap.put("A3PM", 0.);
+        statsMap.put("AAST", 0.);
+        statsMap.put("ATO", 0.);
     }
     
     public boolean completeGame(){
@@ -55,6 +72,9 @@ public class Game {
     public String getID() {
         return ID;
     }
+    public Map<String, Double> getStatsMap() {
+        return statsMap;
+    }
     
     //setters
     public void setHomeTeam(Team homeTeam) {
@@ -72,6 +92,9 @@ public class Game {
     }
     public void setID(String ID) {
         this.ID = ID;
+    }
+    public void setStatsMap(Map<String, Double> statsMap) {
+        this.statsMap = statsMap;
     }
     
     //toString
