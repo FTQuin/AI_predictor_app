@@ -12,6 +12,7 @@ import com.example.searchparty.R;
 import com.example.searchparty.ui.saved_prediction.SavedPredictionFragment.OnListFragmentInteractionListener;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,14 @@ public class MySavedPredictionRecyclerViewAdapter extends RecyclerView.Adapter<M
                 return ((Long)(o2.getGame().getStartTime().getTime() - o1.getGame().getStartTime().getTime())).intValue();
             }
         });
+    
+        Date now = new Date();
+        for (int i = 0; i < items.size(); i++) {
+            if(items.get(i).getGame().getStartTime().getTime() > now.getTime()){
+                items.remove(i);
+                i--;
+            }
+        }
         
         mValues = items;
         mListener = listener;
