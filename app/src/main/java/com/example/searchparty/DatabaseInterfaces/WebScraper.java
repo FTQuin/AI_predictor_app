@@ -38,10 +38,9 @@ public class WebScraper {
             try {
                 Date now = new Date();
                 now.setTime(now.getTime()+(1000*60*60*24));
-                SimpleDateFormat ymd = new SimpleDateFormat("yyyy/MM/dd/");
-                String urlString = "https://www.ncaa.com/scoreboard/basketball-men/d1/";
+                SimpleDateFormat ymd = new SimpleDateFormat("yyyyMMdd/");
+                String urlString = "https://www.espn.com/mens-college-basketball/schedule/_/date/";
                 urlString += ymd.format(now);
-                urlString += "top-25";
         
                 URL url = new URL(urlString);
                 HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -55,26 +54,25 @@ public class WebScraper {
         
                 Document doc = Jsoup.parse(tmp.toString());
         
-                Element scoreboard = doc.getElementById("scoreboardGames");
-                Elements games = scoreboard.getElementsByClass("gamePod");
+                Element scoreboard = doc.getElementsByClass("schedule").first();
+                Elements games = scoreboard.getElementsByTag("tbody").first().getElementsByTag("tr");
         
                 DatabaseInterface dbi = new DatabaseInterface(contexts[0]);
         
                 Log.d("WEB SCRAPER", "games:");
                 for (Element game : games) {
-                    Elements teams = game.getElementsByClass("gamePod-game-team-name");
-            
-                    Team homeTeam = new Team(teams.first().text());
-                    Team awayTeam = new Team(teams.last().text());
+                    Elements teams = game.getElementsByTag("td");
+                    
+                    Team homeTeam = new Team(teams.get(1).getElementsByClass("team-name").first().getElementsByTag("span").first().text());
+                    Team awayTeam = new Team(teams.get(0).getElementsByClass("team-name").first().getElementsByTag("span").first().text());
                     Game currGame = new Game(homeTeam, awayTeam);
-                    Prediction blankPred = new Prediction(currGame);
             
-                    String[] dateStringArgs =  game.getElementsByClass("game-time").first().text().split(" ");
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/hh:mmaa");
-                    String dateString = ymd.format(now)+dateStringArgs[0];
-                    sdf.setTimeZone(TimeZone.getTimeZone(dateStringArgs[1]));
-                    Log.d("WEB SCRAPER", sdf.parse(dateString).toString());
-                    currGame.setStartTime(sdf.parse(dateString).getTime());
+//                    String[] dateStringArgs =  teams.get(2).getElementsByTag("a").first().text().split(" ");
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/hh:mmaa");
+//                    String dateString = ymd.format(now)+dateStringArgs[0];
+////                    sdf.setTimeZone(TimeZone.getTimeZone(dateStringArgs[1]));
+//                    Log.d("WEB SCRAPER", sdf.parse(dateString).toString());
+                    currGame.setStartTime(now.getTime());
             
                     dbi.addTeam(homeTeam);
                     dbi.addTeam(awayTeam);
@@ -97,10 +95,9 @@ public class WebScraper {
             try {
                 Date now = new Date();
                 now.setTime(now.getTime()-(1000*60*60*24));
-                SimpleDateFormat ymd = new SimpleDateFormat("yyyy/MM/dd/");
-                String urlString = "https://www.ncaa.com/scoreboard/basketball-men/d1/";
+                SimpleDateFormat ymd = new SimpleDateFormat("yyyyMMdd/");
+                String urlString = "https://www.espn.com/mens-college-basketball/schedule/_/date/";
                 urlString += ymd.format(now);
-                urlString += "top-25";
         
                 URL url = new URL(urlString);
                 HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -114,25 +111,24 @@ public class WebScraper {
         
                 Document doc = Jsoup.parse(tmp.toString());
         
-                Element scoreboard = doc.getElementById("scoreboardGames");
-                Elements games = scoreboard.getElementsByClass("gamePod");
+                Element scoreboard = doc.getElementsByClass("schedule").first();
+                Elements games = scoreboard.getElementsByTag("tbody").first().getElementsByTag("tr");
         
                 DatabaseInterface dbi = new DatabaseInterface(contexts[0]);
         
                 Log.d("WEB SCRAPER", "games:");
                 for (Element game : games) {
-                    Elements teams = game.getElementsByClass("gamePod-game-team-name");
-            
-                    Team homeTeam = new Team(teams.first().text());
-                    Team awayTeam = new Team(teams.last().text());
+                    Elements teams = game.getElementsByTag("td");
+    
+                    Team homeTeam = new Team(teams.get(1).getElementsByClass("team-name").first().getElementsByTag("span").first().text());
+                    Team awayTeam = new Team(teams.get(0).getElementsByClass("team-name").first().getElementsByTag("span").first().text());
                     Game currGame = new Game(homeTeam, awayTeam);
-                    Prediction blankPred = new Prediction(currGame);
             
                     currGame.setStartTime(now.getTime());
-                    
                     //get stats
-                    String statUrlString = "https://www.ncaa.com";
-                    statUrlString += game.getElementsByClass("gamePod-link").attr("href");
+                    String statUrlString = "https://www.espn.com";
+                    statUrlString += teams.get(2).getElementsByTag("a").first().attr("href");
+                    statUrlString = statUrlString.replace("game?", "matchup?");
     
                     URL statUrl = new URL(statUrlString);
                     HttpURLConnection statUrlConn = (HttpURLConnection) statUrl.openConnection();
@@ -144,33 +140,27 @@ public class WebScraper {
                         statTmp.append(line);
                     }
     
-                    Document statDoc = Jsoup.parse(tmp.toString());
+                    Document statDoc = Jsoup.parse(statTmp.toString());
     
                     Map<String, Double> tempStatsMap = currGame.getStatsMap();
-    
-                    Element awayBox = statDoc.getElementsByClass("boxscore-table_player_visitor").first();
-                    Element homeBox = statDoc.getElementsByClass("boxscore-table_player_home").first();
                     
-                    Elements homeTotals = homeBox.getElementsByClass("total-row").first().getElementsByTag("td");
-                    Elements awayTotals = awayBox.getElementsByClass("total-row").first().getElementsByTag("td");
-                    
-                    Elements homePercents = homeBox.getElementsByClass("percentages-row").first().getElementsByTag("td");
-                    Elements awayPercents = awayBox.getElementsByClass("percentages-row").first().getElementsByTag("td");
+                    //TODO:pick up vhanging website from here
+                    Elements statTable = statDoc.getElementById("gamepackage-matchup").getElementsByTag("tbody").first().getElementsByTag("tr");
     
-                    tempStatsMap.put("HPTS", Double.parseDouble(homeTotals.get(12).text()));
-                    tempStatsMap.put("APTS", Double.parseDouble(awayTotals.get(12).text()));
-                    
-                    tempStatsMap.put("HAST", Double.parseDouble(homeTotals.get(7).text()));
-                    tempStatsMap.put("AAST", Double.parseDouble(awayTotals.get(7).text()));
+                    tempStatsMap.put("HFGM", Double.parseDouble(statTable.get(1).getElementsByTag("td").get(2).text()));
+                    tempStatsMap.put("AFGM", Double.parseDouble(statTable.get(1).getElementsByTag("td").get(1).text()));
     
-                    tempStatsMap.put("HTO", Double.parseDouble(homeTotals.get(10).text()));
-                    tempStatsMap.put("ATO", Double.parseDouble(awayTotals.get(10).text()));
-    
-                    tempStatsMap.put("HFGM", Double.parseDouble(homePercents.get(1).text()));
-                    tempStatsMap.put("AFGM", Double.parseDouble(awayPercents.get(1).text()));
+                    tempStatsMap.put("H3PM", Double.parseDouble(statTable.get(3).getElementsByTag("td").get(2).text()));
+                    tempStatsMap.put("A3PM", Double.parseDouble(statTable.get(3).getElementsByTag("td").get(1).text()));
                     
-                    tempStatsMap.put("H3PM", Double.parseDouble(homePercents.get(2).text()));
-                    tempStatsMap.put("A3PM", Double.parseDouble(awayPercents.get(2).text()));
+                    tempStatsMap.put("HAST", Double.parseDouble(statTable.get(9).getElementsByTag("td").get(2).text()));
+                    tempStatsMap.put("AAST", Double.parseDouble(statTable.get(9).getElementsByTag("td").get(1).text()));
+    
+                    tempStatsMap.put("HTO", Double.parseDouble(statTable.get(12).getElementsByTag("td").get(2).text()));
+                    tempStatsMap.put("ATO", Double.parseDouble(statTable.get(12).getElementsByTag("td").get(1).text()));
+    
+                    tempStatsMap.put("HPTS", Double.parseDouble(statDoc.getElementById("linescore").getElementsByTag("tr").get(1).getElementsByTag("td").get(3).text()));
+                    tempStatsMap.put("APTS", Double.parseDouble(statDoc.getElementById("linescore").getElementsByTag("tr").get(2).getElementsByTag("td").get(3).text()));
                     
                     currGame.setStatsMap(tempStatsMap);
                     

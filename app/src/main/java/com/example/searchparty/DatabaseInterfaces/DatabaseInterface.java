@@ -204,9 +204,9 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                     + GAME_TABLE_COLS[2][0] + " = '" + game.getAwayTeam().getID() + "', "
                     + GAME_TABLE_COLS[3][0] + " = '" + game.getStartTime().getTime() +"'";
             for (int i = 0; i < game.getStatsMap().values().size(); i++) {
-                query +=  ", ''" + GAME_TABLE_COLS[i+4][0] + " = '" + game.getStatsMap().get(GAME_TABLE_COLS[i+4][1]);
+                query +=  ", '" + GAME_TABLE_COLS[i+4][0] + "' = " + game.getStatsMap().get(GAME_TABLE_COLS[i+4][1]);
             }
-            query += "' WHERE " + GAME_TABLE_COLS[0][0] + " = '" + game.getID() + "'";
+            query += " WHERE " + GAME_TABLE_COLS[0][0] + " = '" + game.getID() + "'";
         
             db.execSQL(query);
     

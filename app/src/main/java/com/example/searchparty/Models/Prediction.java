@@ -64,6 +64,6 @@ public class Prediction {
     
     @Override
     public int hashCode() {
-        return Objects.hash(predictedOutcome, game);
+        return Objects.hash(predictedOutcome, game.ID);
     }
 }
