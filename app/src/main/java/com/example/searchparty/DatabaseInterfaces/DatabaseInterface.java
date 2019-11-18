@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.searchparty.Models.Game;
 import com.example.searchparty.Models.Prediction;
@@ -172,6 +173,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             
         }
         else {
+            teamMap.put(team.getID(), team);
             ContentValues contentValues = new ContentValues();
     
             //ID
@@ -227,6 +229,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             db.close();
             return true;
         } else {
+            gameMap.put(game.getID(), game);
             ContentValues contentValues = new ContentValues();
     
             //id
@@ -283,6 +286,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             db.close();
             return true;
         } else {
+            predictionMap.put(prediction.getID(), prediction);
             ContentValues contentValues = new ContentValues();
     
             //id

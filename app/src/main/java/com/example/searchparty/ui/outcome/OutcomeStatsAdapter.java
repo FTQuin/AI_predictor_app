@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.searchparty.Models.Game;
+import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
 
 public class OutcomeStatsAdapter extends BaseAdapter {
@@ -22,7 +23,7 @@ public class OutcomeStatsAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 20;
+        return game.getStatsMap().size();
     }
     
     @Override
@@ -37,10 +38,18 @@ public class OutcomeStatsAdapter extends BaseAdapter {
     
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null)
-            convertView = LayoutInflater.from(mContext)
-                .inflate(R.layout.fragment_outcome_stat_item, parent, false);
-
+        
+        if (convertView == null) {
+            final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+            convertView = layoutInflater.inflate(R.layout.fragment_outcome_stat_item, null);
+        }
+        
+        TextView title = convertView.findViewById(R.id.stat_name);
+        title.setText(game.getStatsMap().keySet().toArray(new String[game.getStatsMap().size()])[position].substring(1));
+    
+        TextView value = convertView.findViewById(R.id.stat_team);
+        value.setText(game.getStatsMap().values().toArray(new Double[game.getStatsMap().size()])[position].toString());
+        
         return convertView;
         
 //        TextView dummyTextView = new TextView(mContext);

@@ -167,15 +167,20 @@ public class WebScraper {
                     Log.d("WEBSCRAPER", "done stats");
                     
                     //add teams
+                    Prediction blankPred = new Prediction(currGame);
+                    
                     dbi.addTeam(homeTeam);
                     dbi.addTeam(awayTeam);
+                    
                     dbi.addGame(currGame);
-//                    dbi.addPrediction(blankPred);
+                    dbi.loadDataFromDB();
+                    Game testGame = dbi.getGame(currGame.getID());
+                    
+                    dbi.addPrediction(blankPred);
             
                     Log.d("WEB SCRAPER", teams.first().text());
                     Log.d("WEB SCRAPER", teams.last().text());
                 }
-                dbi.loadDataFromDB();
         
                 Log.d("WEB SCRAPER", "done");
         

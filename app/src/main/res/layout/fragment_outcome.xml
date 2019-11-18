@@ -11,12 +11,13 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="144dp"
         android:layout_height="144dp"
+        android:layout_marginTop="8dp"
         android:indeterminate="false"
         android:progress="75"
         android:progressDrawable="@drawable/circle_prog_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/out_pts" />
 
     <TextView
         android:id="@+id/homeTestProgTxt2"
@@ -33,6 +34,7 @@
         android:id="@+id/gridview_outcome"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/list_item"
         android:numColumns="2"
         android:stretchMode="columnWidth"
@@ -40,12 +42,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTestProgBar2"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/out_home_name"
         tools:listitem="@layout/fragment_outcome_stat_item" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/out_winner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -68,24 +69,38 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/out_pts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="116 - 110"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/out_winner" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/out_home_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:text="Prediction"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/out_away_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/homeTestProgBar2" />
+
+    <TextView
+        android:id="@+id/out_away_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/out_home_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/out_home_name"
+        app:layout_constraintTop_toTopOf="@+id/out_home_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

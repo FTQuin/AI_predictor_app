@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.searchparty.DatabaseInterfaces.WebScraper;
 import com.example.searchparty.ui.future_games.FutureGamesFragmentDirections;
 import com.example.searchparty.ui.predict_game.PredictGameFragmentArgs;
+import com.example.searchparty.ui.saved_prediction.SavedPredictionFragmentDirections;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -82,7 +83,8 @@ public class MainActivity extends AppCompatActivity implements SavedPredictionFr
     
     @Override
     public void onListFragmentInteraction(Prediction prediction) {
-    
+        NavDirections directions = SavedPredictionFragmentDirections.actionNavSavedPredictionsToNavOutcome(prediction.getID());
+        Navigation.findNavController(findViewById(R.id.nav_host_fragment)).navigate(directions);
     }
     
     //called when a game is clicked on in future games

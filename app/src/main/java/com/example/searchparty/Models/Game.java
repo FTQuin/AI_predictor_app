@@ -3,9 +3,11 @@ package com.example.searchparty.Models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.UUID;
 
 public class Game {
@@ -39,16 +41,16 @@ public class Game {
         
         this.ID = UUID.randomUUID().toString();
     
-        this.statsMap = new HashMap<>(10);
+        this.statsMap = new LinkedHashMap<>();
         statsMap.put("HPTS", 0.);
-        statsMap.put("HFGM", 0.);
-        statsMap.put("H3PM", 0.);
-        statsMap.put("HAST", 0.);
-        statsMap.put("HTO", 0.);
         statsMap.put("APTS", 0.);
+        statsMap.put("HFGM", 0.);
         statsMap.put("AFGM", 0.);
+        statsMap.put("H3PM", 0.);
         statsMap.put("A3PM", 0.);
+        statsMap.put("HAST", 0.);
         statsMap.put("AAST", 0.);
+        statsMap.put("HTO", 0.);
         statsMap.put("ATO", 0.);
     }
     

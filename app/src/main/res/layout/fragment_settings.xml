@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/text_settings"
-        android:layout_width="match_parent"
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/menu_settings"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:text="Using the Predict Game feature:\n\nThis feature uses machine learning and artificial intelligence in order to learn historical March Madness data. Since the AI has already been trained on the data, it can be used to generate predictions on future games. The sliders on the Predict Game screen bias the AI’s prediction based on what game statistics you believe will be most relevant for the game. For example, if Texas Tech is playing Duke and you believe that Duke is a team that shoots a lot of three’s, you can bias the AI’s prediction to weight that factor more heavily. Just slide the round circle on the slider to the right and this will adjust the bias. \n\nFor more information on the details of the AI, please visit WinMarch.com. "
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

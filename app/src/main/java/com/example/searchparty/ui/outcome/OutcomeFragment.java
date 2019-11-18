@@ -12,9 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.searchparty.DatabaseInterfaces.DatabaseInterface;
 import com.example.searchparty.Models.Game;
+import com.example.searchparty.Models.Prediction;
 import com.example.searchparty.Models.Team;
 import com.example.searchparty.R;
+
+import org.w3c.dom.Text;
 
 public class OutcomeFragment extends Fragment {
     
@@ -26,9 +30,38 @@ public class OutcomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(OutcomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_outcome, container, false);
     
-        GridView gridView = root.findViewById(R.id.gridview_outcome);
-        OutcomeStatsAdapter statsAdapter = new OutcomeStatsAdapter(getContext(), new Game(new Team("HI"), new Team("BYE")));
-        gridView.setAdapter(statsAdapter);
+        GridView gridView = root.findViewById(R.id.gridview_outcome);;
+    
+        DatabaseInterface dbi = new DatabaseInterface(getContext());
+    
+        try {
+            if (getArguments() != null) {
+                String predID = OutcomeFragmentArgs.fromBundle(getArguments()).getPredID();
+                if (!predID.equals("")) {
+                    Prediction pred = dbi.getPrediction(predID);
+                    Game game = pred.getGame();
+                    OutcomeStatsAdapter statsAdapter = new OutcomeStatsAdapter(getContext(), game);
+                    gridView.setAdapter(statsAdapter);
+    
+                    Integer homePts = game.getStatsMap().get("HPTS").intValue();
+                    Integer awayPts = game.getStatsMap().get("APTS").intValue();
+                    
+                    TextView homeName = root.findViewById(R.id.out_home_name);
+                    TextView awayName = root.findViewById(R.id.out_away_name);
+    
+                    TextView winnerName = root.findViewById(R.id.out_winner);
+                    winnerName.setText(game.getStatsMap().get("HPTS") > game.getStatsMap().get("APTS")?game.getHomeTeam().getName():game.getAwayTeam().getName());
+                    
+                    homeName.setText(pred.getGame().getHomeTeam().getName());
+                    awayName.setText(pred.getGame().getAwayTeam().getName());
+    
+                    TextView pts = root.findViewById(R.id.out_pts);
+                    pts.setText((homePts>awayPts?homePts:awayPts).toString()+" - "+(homePts>awayPts?awayPts:homePts).toString());
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         
         return root;
     }
