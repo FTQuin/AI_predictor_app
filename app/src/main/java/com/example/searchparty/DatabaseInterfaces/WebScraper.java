@@ -144,7 +144,7 @@ public class WebScraper {
     
                     Map<String, Double> tempStatsMap = currGame.getStatsMap();
                     
-                    //TODO:pick up vhanging website from here
+                    //TODO:pick up changing website from here
                     Elements statTable = statDoc.getElementById("gamepackage-matchup").getElementsByTag("tbody").first().getElementsByTag("tr");
     
                     tempStatsMap.put("HFGM", Double.parseDouble(statTable.get(1).getElementsByTag("td").get(2).text()));

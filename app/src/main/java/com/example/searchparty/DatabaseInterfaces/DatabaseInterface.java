@@ -279,7 +279,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
                     + PREDICTION_TABLE_COLS[0][0] + " = '" + prediction.getID() + "' "
                     + " WHERE "
                     + PREDICTION_TABLE_COLS[1][0] + " = '" + prediction.getPredictedOutcome() + "', "
-                    + PREDICTION_TABLE_COLS[2][0] + " = '" + prediction.getGame().getID() + "', ";
+                    + PREDICTION_TABLE_COLS[2][0] + " = '" + prediction.getGame().getID() + "'";
     
             db.execSQL(query);
     
