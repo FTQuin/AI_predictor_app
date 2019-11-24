@@ -243,7 +243,7 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             
             //stats
             for (int i = 0; i < game.getStatsMap().size(); i++) {
-                contentValues.put(GAME_TABLE_COLS[4+i][0], game.getStatsMap().get(GAME_TABLE_COLS[4+i][1]));
+                contentValues.put(GAME_TABLE_COLS[4+i][0], game.getStatsMap().get(GAME_TABLE_COLS[4+i][0]));
             }
     
             Log.d(TAG, "addData: Adding items to " + GAME_TABLE_NAME + ": " + game.getID());
@@ -278,7 +278,6 @@ public class DatabaseInterface extends SQLiteOpenHelper {
             String query = "UPDATE " + PREDICTION_TABLE_NAME + " SET "
                     + PREDICTION_TABLE_COLS[0][0] + " = '" + prediction.getID() + "' "
                     + " WHERE "
-                    + PREDICTION_TABLE_COLS[1][0] + " = '" + prediction.getPredictedOutcome() + "', "
                     + PREDICTION_TABLE_COLS[2][0] + " = '" + prediction.getGame().getID() + "'";
     
             db.execSQL(query);

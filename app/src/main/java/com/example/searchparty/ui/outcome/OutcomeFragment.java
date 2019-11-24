@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -38,11 +39,18 @@ public class OutcomeFragment extends Fragment {
             if (getArguments() != null) {
                 String predID = OutcomeFragmentArgs.fromBundle(getArguments()).getPredID();
                 if (!predID.equals("")) {
+                    dbi.loadDataFromDB();
                     Prediction pred = dbi.getPrediction(predID);
                     Game game = pred.getGame();
                     OutcomeStatsAdapter statsAdapter = new OutcomeStatsAdapter(getContext(), game);
                     gridView.setAdapter(statsAdapter);
     
+                    ProgressBar progCirc = root.findViewById(R.id.outTestProgBar2);
+                    TextView progText = root.findViewById(R.id.outTestProgTxt2);
+    
+                    progCirc.setProgress(new Double(pred.getPredictedOutcome()).intValue());
+                    progText.setText(new Double(pred.getPredictedOutcome()).intValue()+"%");
+                    
                     Integer homePts = game.getStatsMap().get("HPTS").intValue();
                     Integer awayPts = game.getStatsMap().get("APTS").intValue();
                     

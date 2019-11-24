@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/homeTestProgBar2"
+        android:id="@+id/outTestProgBar2"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="144dp"
         android:layout_height="144dp"
@@ -20,15 +20,15 @@
         app:layout_constraintTop_toBottomOf="@+id/out_pts" />
 
     <TextView
-        android:id="@+id/homeTestProgTxt2"
+        android:id="@+id/outTestProgTxt2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="75%"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/homeTestProgBar2"
-        app:layout_constraintEnd_toEndOf="@+id/homeTestProgBar2"
-        app:layout_constraintStart_toStartOf="@+id/homeTestProgBar2"
-        app:layout_constraintTop_toTopOf="@+id/homeTestProgBar2" />
+        app:layout_constraintBottom_toBottomOf="@+id/outTestProgBar2"
+        app:layout_constraintEnd_toEndOf="@+id/outTestProgBar2"
+        app:layout_constraintStart_toStartOf="@+id/outTestProgBar2"
+        app:layout_constraintTop_toTopOf="@+id/outTestProgBar2" />
 
     <GridView
         android:id="@+id/gridview_outcome"
@@ -89,7 +89,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/out_away_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTestProgBar2" />
+        app:layout_constraintTop_toBottomOf="@+id/outTestProgBar2" />
 
     <TextView
         android:id="@+id/out_away_name"
