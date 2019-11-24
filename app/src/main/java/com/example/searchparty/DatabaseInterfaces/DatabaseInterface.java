@@ -367,7 +367,8 @@ public class DatabaseInterface extends SQLiteOpenHelper {
         
         while (data.moveToNext()){
             if(gameMap.get(data.getString(2)) != null) {
-                Prediction tempPrediction = new Prediction(gameMap.get(data.getString(2)));
+                Prediction tempPrediction = new Prediction();
+                tempPrediction.setGame(gameMap.get(data.getString(2)));
                 tempPrediction.setID(data.getString(0));
                 tempPrediction.setPredictedOutcome(data.getDouble(1));
                 

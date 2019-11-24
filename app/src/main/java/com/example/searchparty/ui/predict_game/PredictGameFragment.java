@@ -65,7 +65,8 @@ public class PredictGameFragment extends Fragment {
             btn_save_pred.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Prediction pred = new Prediction(savedGame);
+                    Prediction pred = new Prediction();
+                    pred.setGame(savedGame);
                     savedGame.setPrediction(pred);
                     dbi.addPrediction(savedGame.getPrediction());
                     dbi.addGame(savedGame);

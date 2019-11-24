@@ -120,8 +120,8 @@ public class WebScraper {
                 for (Element game : games) {
                     Elements teams = game.getElementsByTag("td");
     
-                    Team homeTeam = new Team(teams.get(1).getElementsByClass("team-name").first().getElementsByTag("span").first().text());
-                    Team awayTeam = new Team(teams.get(0).getElementsByClass("team-name").first().getElementsByTag("span").first().text());
+                    Team homeTeam = new Team(teams.get(1).getElementsByClass("team-name").first().getElementsByTag("span").first().text().replace("'", "\'"));
+                    Team awayTeam = new Team(teams.get(0).getElementsByClass("team-name").first().getElementsByTag("span").first().text().replace("'", "\'"));
                     Game currGame = new Game(homeTeam, awayTeam);
             
                     currGame.setStartTime(now.getTime());
@@ -167,7 +167,8 @@ public class WebScraper {
                     Log.d("WEBSCRAPER", "done stats");
                     
                     //add teams
-                    Prediction blankPred = new Prediction(currGame);
+                    Prediction blankPred = new Prediction();
+                    blankPred.setGame(currGame);
                     
                     dbi.addTeam(homeTeam);
                     dbi.addTeam(awayTeam);

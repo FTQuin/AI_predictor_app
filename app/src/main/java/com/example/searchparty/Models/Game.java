@@ -34,7 +34,8 @@ public class Game {
         homeTeam.addFutureGame(this);
         awayTeam.addFutureGame(this);
         
-        this.prediction = new Prediction(this);
+        this.prediction = new Prediction();
+        this.prediction.setGame(this);
         
         this.startTime = new Date();
         startTime.setTime(startTime.getTime());

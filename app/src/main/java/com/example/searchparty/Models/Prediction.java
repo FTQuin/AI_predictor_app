@@ -13,11 +13,10 @@ public class Prediction {
     private Game game;
     private String ID;
     
-    public Prediction(Game currentGame){
+    public Prediction(){
         //TODO: change this to initialize to zero once it no longer needs to be tested
         this.predictedOutcome = new Random().nextDouble()*100;
-
-        this.game = currentGame;
+        
         this.ID = UUID.randomUUID().toString();
     }
     
